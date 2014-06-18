@@ -42,7 +42,7 @@
 	        android:id="@id/android:empty"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="@string/noData"/>
+	        android:text="@string/no_data"/>
         
     </ExpandableListView>
  
