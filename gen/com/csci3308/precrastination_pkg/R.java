@@ -42,7 +42,7 @@ public final class R {
         public static final int grpColor=0x7f080007;
         public static final int grpExpList=0x7f080003;
         public static final int grpName=0x7f080006;
-        public static final int lblListHeader=0x7f080005;
+        public static final int grpHeaders=0x7f080005;
         public static final int remTimeEdit=0x7f080001;
         public static final int remTimeHeader=0x7f080000;
     }

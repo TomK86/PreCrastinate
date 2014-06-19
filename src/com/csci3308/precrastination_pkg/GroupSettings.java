@@ -51,7 +51,7 @@ public class GroupSettings extends ListActivity {
 		private LayoutInflater mInflater;
 		
 		public GroupSetAdapter() {
-			mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			mInflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 
 		@Override
