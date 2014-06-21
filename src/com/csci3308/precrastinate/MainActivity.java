@@ -125,13 +125,13 @@ public class MainActivity extends Activity {
  	private void prepareTaskData() {
  		int i = 0;
  		String key = "task" + i;
- 		Map<String, Task> listTaskObjs = new HashMap<String, Task>();
+ 		/*Map<String, Task> listTaskObjs = new HashMap<String, Task>();
  		while(saveTask.contains(key)) {
  			listTaskObjs.put(key, new Task(saveTask.getString(key, ""), saveTask.getLong(key, 0), 
  					saveTask.getFloat(key, 0), saveTask.getInt(key, 0), saveTask.getBoolean(key, false)));
  			i++;
  			key = "task" + i;
- 		}
+ 		}*/
  	}
     
     // Dynamically populate group list from saved SharedPreferences group data
