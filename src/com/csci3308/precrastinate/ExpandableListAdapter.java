@@ -1,9 +1,7 @@
-package com.csci3308.precrastination_pkg;
+package com.csci3308.precrastinate;
 
 import java.util.HashMap;
 import java.util.List;
-
-import com.csci3308.precrastination_pkg.R;
 
 import android.content.Context;
 import android.graphics.Typeface;

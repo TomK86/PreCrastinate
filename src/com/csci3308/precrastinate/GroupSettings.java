@@ -1,8 +1,6 @@
-package com.csci3308.precrastination_pkg;
+package com.csci3308.precrastinate;
 
 import java.util.ArrayList;
-
-import com.csci3308.precrastination_pkg.R;
 
 import android.app.ListActivity;
 import android.content.Context;
