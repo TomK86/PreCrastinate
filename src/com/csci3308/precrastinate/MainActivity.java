@@ -3,14 +3,20 @@ package com.csci3308.precrastinate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ListActivity implements OnClickListener {
 	
+	List<Item> items;
 	List<String> listGroupHeaders, listTaskKeys;
     HashMap<String, Integer> listGroupSettings;
     SharedPreferences saveGroup, saveTask;
@@ -20,7 +26,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-     // initialize saved task list data
+        
+        // initialize saved task list data
         saveTask = getSharedPreferences("Saved Task Data", 0);
         editTask = saveTask.edit();
         
@@ -38,10 +45,70 @@ public class MainActivity extends Activity {
         editGroup.commit();
  
         // prepare group list data
-        prepareGroupData(firstAppOpen);
+        //prepareGroupData(firstAppOpen);
         
         // prepare task list data
-        prepareTaskData();
+        //prepareTaskData();
+        
+        // set task list adapter
+        items = new ArrayList<Item>();
+        items.add(new Header("Active Tasks"));
+        items.add(new ListItem(0, "Active Task 1", "4/15/2015", false));
+        items.add(new ListItem(1, "Active Task 2", "5/29/1984", false));
+        items.add(new ListItem(2, "Active Task 3", "1/2/1956", false));
+        items.add(new ListItem(3, "Active Task 4", "8/7/2043", false));
+        items.add(new ListItem(4, "Active Task 5", "7/10/1977", false));
+        items.add(new ListItem(4, "Active Task 6", "1/1/1776", false));
+        items.add(new ListItem(4, "Active Task 7", "12/31/9999", false));
+        items.add(new Header("Completed Tasks"));
+        items.add(new ListItem(3, "Completed Task 8", "3/31/2014", true));
+        items.add(new ListItem(2, "Completed Task 9", "1/1/0001", true));
+        items.add(new ListItem(1, "Completed Task 10", "2/2/2016", true));
+        items.add(new ListItem(0, "Completed Task 11", "4/1/2015", true));
+        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(this, items);
+        setListAdapter(adapter);
+    }
+    
+    @Override
+	public void onClick(View v) {
+		//TODO this is what happens when you click a task in the list
+		
+	}
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+        case R.id.action_add:
+        	//TODO addToList();
+        	return true;
+        case R.id.action_settings:
+        	//TODO call preferences screen
+        	return true;
+        default:
+        	return super.onOptionsItemSelected(item);
+        }
+    }
+    
+    public void addToList() {
+    	//TODO call addtolist class constructor
+    }
+    
+    public void onCheckboxClicked(View view) {
+    	boolean checked = ((CheckBox) view).isChecked();
+    	view.findViewById(R.id.checkbox);
+    	if(checked) {
+    		//TODO move task to completed section
+    	}
+    	else {
+    		//TODO move task to active section
+    	}
     }
     
     // Save task data to a SharedPreferences object
@@ -58,10 +125,10 @@ public class MainActivity extends Activity {
          editTask.putInt(key, group);
          editTask.putBoolean(key, completed);
          editTask.commit();
-     }
+    }
  	
  	// Delete task data from a SharedPreferences object
-     public void deleteTaskData(int position) {
+    public void deleteTaskData(int position) {
      	String key = "task" + position;
      	if(saveTask.contains(key)) {
      		editTask.remove(key);
@@ -85,7 +152,7 @@ public class MainActivity extends Activity {
  				key = "task" + i;
      		}
      	}
-     }
+    }
     
     // Save group data to a SharedPreferences object
     public void saveGroupData(String name, int color) {
@@ -121,17 +188,17 @@ public class MainActivity extends Activity {
     	}
     }
     
- // Dynamically create Task objects from saved SharedPreferences data
+    // Dynamically create Task objects from saved SharedPreferences data
  	private void prepareTaskData() {
- 		int i = 0;
- 		String key = "task" + i;
- 		Map<String, Task> listTaskObjs = new HashMap<String, Task>();
- 		while(saveTask.contains(key)) {
- 			listTaskObjs.put(key, new Task(saveTask.getString(key, ""), saveTask.getLong(key, 0), 
- 					saveTask.getFloat(key, 0), saveTask.getInt(key, 0), saveTask.getBoolean(key, false)));
- 			i++;
- 			key = "task" + i;
- 		}
+ 		//int i = 0;
+ 		//String key = "task" + i;
+ 		//Map<String, Task> listTaskObjs = new HashMap<String, Task>();
+ 		//while(saveTask.contains(key)) {
+ 			//listTaskObjs.put(key, new Task(saveTask.getString(key, ""), saveTask.getLong(key, 0), 
+ 					//saveTask.getFloat(key, 0), saveTask.getInt(key, 0), saveTask.getBoolean(key, false)));
+ 			//i++;
+ 			//key = "task" + i;
+ 		//}
  	}
     
     // Dynamically populate group list from saved SharedPreferences group data
@@ -178,4 +245,5 @@ public class MainActivity extends Activity {
 	        return;
     	}
     }
+
 }
