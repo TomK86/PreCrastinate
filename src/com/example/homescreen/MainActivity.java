@@ -1,4 +1,4 @@
-// Attempt at a home screen/to do list for our app
+// Attempt at a home screen/to do list for our android application
 // following a tutorial online, found at http://www.youtube.com/watch?v=rwEozDvCMj0
 
 package com.example.homescreen;
@@ -41,7 +41,7 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
         
         addItem = (EditText)findViewById(R.id.addItem);
         addButton = (Button)findViewById(R.id.addButton);
-        toDo = (ListView)findViewById(R.id.toDo);
+        toDo = (ListView)findViewById(R.id.toDoList);
         
         addButton.setOnClickListener(this);
         addItem.setOnKeyListener(this);
@@ -109,7 +109,7 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+ /*   public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
         }
@@ -120,7 +120,7 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
-    }
+    }*/
 
 
 }
