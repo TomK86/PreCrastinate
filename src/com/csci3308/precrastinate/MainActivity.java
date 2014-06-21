@@ -49,21 +49,16 @@ public class MainActivity extends Activity {
  	public void saveTaskData(SharedPreferences saveTask, SharedPreferences.Editor editTask, 
  			String name, long due, float priority, int group, boolean completed) {
          Integer i = 0;
-         while(i <= Integer.MAX_VALUE) {
-         	String key = "task" + i;
-         	if(saveTask.contains(key)) {
-         		i++;
-         		continue;
-         	}
-         	else {
-         		editTask.putString(key, name);
-         		editTask.putLong(key, due);
-         		editTask.putFloat(key, priority);
-                 editTask.putInt(key, group);
-                 editTask.putBoolean(key, completed);
-                 break;
-         	}
+         String key = "task" + i;
+         while(saveTask.contains(key)) {
+     		i++;
+     		key = "task" + i;
          }
+         editTask.putString(key, name);
+  		 editTask.putLong(key, due);
+  		 editTask.putFloat(key, priority);
+         editTask.putInt(key, group);
+         editTask.putBoolean(key, completed);
          editTask.commit();
      }
  	
@@ -92,24 +87,19 @@ public class MainActivity extends Activity {
  				i++;
  				key = "task" + i;
      		}
-     		//groupsAdapter.notifyDataSetChanged();
      	}
      }
     
     // Save group data to a SharedPreferences object
     public void saveGroupData(SharedPreferences saveGroup, SharedPreferences.Editor editGroup, String name, Integer color) {
         Integer i = 0;
-        while(i <= Integer.MAX_VALUE) {
-        	if(saveGroup.contains("grp" + i)) {
+        String key = "grp" + i;
+        while(saveGroup.contains(key)) {
         		i++;
-        		continue;
-        	}
-        	else {
-        		editGroup.putString("grp" + i, name);
-        		editGroup.putInt("grp" + i, color);
-                break;
-        	}
+        		key = "grp" + i;
         }
+        editGroup.putString(key, name);
+		editGroup.putInt(key, color);
         editGroup.commit();
     }
     
@@ -120,22 +110,17 @@ public class MainActivity extends Activity {
     		editGroup.remove(key);
     		editGroup.commit();
     		Integer i = position + 1;
-    		while(i <= Integer.MAX_VALUE) {
-    			key = "grp" + i;
-    			if(saveGroup.contains(key)) {
-    				String name = saveGroup.getString(key, "");
-    				Integer color = saveGroup.getInt(key, 0);
-    				editGroup.putString("grp" + (i-1), name);
-    				editGroup.putInt("grp" + (i-1), color);
-    				editGroup.remove(key);
-    				editGroup.commit();
-    				i++;
-    				continue;
-    			}
-    			else
-    				break;
+    		key = "grp" + i;
+    		while(saveGroup.contains(key)) {
+				String name = saveGroup.getString(key, "");
+				Integer color = saveGroup.getInt(key, 0);
+				editGroup.putString("grp" + (i-1), name);
+				editGroup.putInt("grp" + (i-1), color);
+				editGroup.remove(key);
+				editGroup.commit();
+				i++;
+				key = "grp" + i;
     		}
-    		//listAdapter.notifyDataSetChanged();
     	}
     }
     
