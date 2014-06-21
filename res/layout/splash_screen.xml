@@ -9,14 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
-    <ImageView 
-        android:id="@+id/LogoImage" 
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content" 
-        android:layout_alignParentLeft="true" 
-        android:layout_alignParentTop="true" 
-        android:layout_marginTop="24dp" 
-        android:src="@drawable/logo"/>
 
     <ImageView
         android:id="@+id/BottomContent"
@@ -26,5 +18,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="58dp"
         android:src="@drawable/getorg" />
+
+    <ImageView
+        android:id="@+id/LogoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ProgressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="58dp"
+        android:src="@drawable/logo" />
  
 </RelativeLayout>

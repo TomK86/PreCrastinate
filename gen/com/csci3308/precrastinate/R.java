@@ -988,8 +988,8 @@ containing a value of this type.
         public static final int logo=0x7f02005b;
     }
     public static final class id {
-        public static final int BottomContent=0x7f05003f;
-        public static final int LogoImage=0x7f05003e;
+        public static final int BottomContent=0x7f05003e;
+        public static final int LogoImage=0x7f05003f;
         public static final int ProgressBar=0x7f05003d;
         public static final int action_bar=0x7f05001c;
         public static final int action_bar_activity_content=0x7f050015;
