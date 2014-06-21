@@ -1,13 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">testapp</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="groups">Groups</string>
-    <string name="save_prefs">Save Preferences</string>
-    <string name="remTimeLabel">When would you like to be reminded?</string>
-    <string name="groupLabel">Task Groups</string>
-    <string name="no_data">no data</string>
-
+ 
+    <string name="app_name">PreCrastinate</string>
+    <string name="main">Main Page from MainActivity.java</string>
+    <string name="action_settings">Words</string>
+ 
 </resources>
