@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
     
     // Save task data to a SharedPreferences object
  	public void saveTaskData(String name, long due, float priority, int group, boolean completed) {
-         Integer i = 0;
+         int i = 0;
          String key = "task" + i;
          while(saveTask.contains(key)) {
      		i++;
@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
      	if(saveTask.contains(key)) {
      		editTask.remove(key);
      		editTask.commit();
-     		Integer i = position + 1;
+     		int i = position + 1;
      		key = "task" + i;
      		while(saveTask.contains(key)) {
  				String name = saveTask.getString(key, "");
@@ -101,16 +101,16 @@ public class MainActivity extends Activity {
     }
     
     // Delete group data from a SharedPreferences object
-    public void deleteGroupData(Integer position) {
+    public void deleteGroupData(int position) {
     	String key = "grp" + position;
     	if(saveGroup.contains(key)) {
     		editGroup.remove(key);
     		editGroup.commit();
-    		Integer i = position + 1;
+    		int i = position + 1;
     		key = "grp" + i;
     		while(saveGroup.contains(key)) {
 				String name = saveGroup.getString(key, "");
-				Integer color = saveGroup.getInt(key, 0);
+				int color = saveGroup.getInt(key, 0);
 				editGroup.putString("grp" + (i-1), name);
 				editGroup.putInt("grp" + (i-1), color);
 				editGroup.remove(key);
@@ -136,10 +136,10 @@ public class MainActivity extends Activity {
     
     // Dynamically populate group list from saved SharedPreferences group data
     private void prepareGroupData(boolean firstAppOpen) {
-    	if(firstAppOpen) {
-	        listGroupHeaders = new ArrayList<String>();
-	        listGroupSettings = new HashMap<String, Integer>();
-	 
+    	listGroupHeaders = new ArrayList<String>();
+		listGroupSettings = new HashMap<String, Integer>();
+    	
+		if(firstAppOpen) {
 	        // add default child data
 	        listGroupHeaders.add("To Do");
 	        listGroupHeaders.add("Work");
@@ -163,15 +163,13 @@ public class MainActivity extends Activity {
 	        return;
     	}
     	else {
-    		listGroupHeaders = new ArrayList<String>();
-    		listGroupSettings = new HashMap<String, Integer>();
-	        Integer i = 0;
+	        int i = 0;
 	        String key = "grp" + i;
 	        
 	        // add saved child data
 	        while(saveGroup.contains(key)) {
         		String name = saveGroup.getString(key, "");
-        		Integer color = saveGroup.getInt(key, 0);
+        		int color = saveGroup.getInt(key, 0);
         		listGroupHeaders.add(name);
         		listGroupSettings.put(name, color);
         		i++;
