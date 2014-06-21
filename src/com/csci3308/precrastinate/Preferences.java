@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -21,33 +22,30 @@ import android.widget.Toast;
 import android.widget.TimePicker;
 import android.widget.EditText;
 
-public class Preferences extends Activity {
+public class Preferences {
  
 	ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     EditText remTime;
     EditText grpNames;
     RadioGroup grpColors;
-    List<String> listDataHeader;
-    HashMap<String, Integer> listDataChild;
- 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.preferences_main);
+    
+    public Preferences(View view, List<String> listGroupHeaders, 
+    		HashMap<String, Integer> listGroupSettings) {
+        //setContentView(R.layout.preferences_main);
  
         // get the parent view
-        expListView = (ExpandableListView) findViewById(R.id.groupExpList);
+        expListView = (ExpandableListView) view.findViewById(R.id.groupExpList);
         
         // get the child views
-        remTime = (EditText) findViewById(R.id.remTimeEdit);
+        remTime = (EditText) view.findViewById(R.id.remTimeEdit);
         
-        grpNames = (EditText) findViewById(R.id.grpName);
+        grpNames = (EditText) view.findViewById(R.id.grpName);
         
-        grpColors = (RadioGroup) findViewById(R.id.grpColor);
+        grpColors = (RadioGroup) view.findViewById(R.id.grpColor);
         
         // get expandable list adapter
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        listAdapter = new ExpandableListAdapter(this, listGroupHeaders, listGroupSettings);
  
         // set expandable list adapter
         expListView.setAdapter(listAdapter);
@@ -113,7 +111,7 @@ public class Preferences extends Activity {
             @Override
             public void onGroupExpand(int groupPosition) {
                 Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Expanded",
+                        listGroupHeaders.get(groupPosition) + " Expanded",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -124,7 +122,7 @@ public class Preferences extends Activity {
             @Override
             public void onGroupCollapse(int groupPosition) {
                 Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Collapsed",
+                        listGroupHeaders.get(groupPosition) + " Collapsed",
                         Toast.LENGTH_SHORT).show();
             }
         });
