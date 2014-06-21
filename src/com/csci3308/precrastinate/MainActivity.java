@@ -38,15 +38,14 @@ public class MainActivity extends Activity {
         editGroup.commit();
  
         // prepare group list data
-        prepareGroupData(saveGroup, editGroup, firstAppOpen);
+        prepareGroupData(firstAppOpen);
         
         // prepare task list data
-        prepareTaskData(saveTask, editTask);
+        prepareTaskData();
     }
     
     // Save task data to a SharedPreferences object
- 	public void saveTaskData(SharedPreferences saveTask, SharedPreferences.Editor editTask, 
- 			String name, long due, float priority, int group, boolean completed) {
+ 	public void saveTaskData(String name, long due, float priority, int group, boolean completed) {
          Integer i = 0;
          String key = "task" + i;
          while(saveTask.contains(key)) {
@@ -62,8 +61,7 @@ public class MainActivity extends Activity {
      }
  	
  	// Delete task data from a SharedPreferences object
-     public void deleteTaskData(SharedPreferences saveTask, SharedPreferences.Editor editTask,
-     		Integer position) {
+     public void deleteTaskData(int position) {
      	String key = "task" + position;
      	if(saveTask.contains(key)) {
      		editTask.remove(key);
@@ -90,8 +88,8 @@ public class MainActivity extends Activity {
      }
     
     // Save group data to a SharedPreferences object
-    public void saveGroupData(SharedPreferences saveGroup, SharedPreferences.Editor editGroup, String name, Integer color) {
-        Integer i = 0;
+    public void saveGroupData(String name, int color) {
+        int i = 0;
         String key = "grp" + i;
         while(saveGroup.contains(key)) {
         		i++;
@@ -103,7 +101,7 @@ public class MainActivity extends Activity {
     }
     
     // Delete group data from a SharedPreferences object
-    public void deleteGroupData(SharedPreferences saveGroup, SharedPreferences.Editor editGroup, Integer position) {
+    public void deleteGroupData(Integer position) {
     	String key = "grp" + position;
     	if(saveGroup.contains(key)) {
     		editGroup.remove(key);
@@ -124,7 +122,7 @@ public class MainActivity extends Activity {
     }
     
  // Dynamically create Task objects from saved SharedPreferences data
- 	private void prepareTaskData(SharedPreferences saveTask, SharedPreferences.Editor editTask) {
+ 	private void prepareTaskData() {
  		int i = 0;
  		String key = "task" + i;
  		Map<String, Task> listTaskObjs = new HashMap<String, Task>();
@@ -137,7 +135,7 @@ public class MainActivity extends Activity {
  	}
     
     // Dynamically populate group list from saved SharedPreferences group data
-    private void prepareGroupData(SharedPreferences saveGroup, SharedPreferences.Editor editGroup, boolean firstAppOpen) {
+    private void prepareGroupData(boolean firstAppOpen) {
     	if(firstAppOpen) {
 	        listGroupHeaders = new ArrayList<String>();
 	        listGroupSettings = new HashMap<String, Integer>();
@@ -154,9 +152,9 @@ public class MainActivity extends Activity {
 	        listGroupSettings.put(listGroupHeaders.get(3), saveGroup.getInt("newGrp", 5));
 	        
 	        // save default child data
-	        saveGroupData(saveGroup, editGroup, listGroupHeaders.get(0), listGroupSettings.get(listGroupHeaders.get(0)));
-	        saveGroupData(saveGroup, editGroup, listGroupHeaders.get(1), listGroupSettings.get(listGroupHeaders.get(1)));
-	        saveGroupData(saveGroup, editGroup, listGroupHeaders.get(2), listGroupSettings.get(listGroupHeaders.get(2)));
+	        saveGroupData(listGroupHeaders.get(0), listGroupSettings.get(listGroupHeaders.get(0)));
+	        saveGroupData(listGroupHeaders.get(1), listGroupSettings.get(listGroupHeaders.get(1)));
+	        saveGroupData(listGroupHeaders.get(2), listGroupSettings.get(listGroupHeaders.get(2)));
 	        
 	        // turn off first-open flag
 	        firstAppOpen = false;
