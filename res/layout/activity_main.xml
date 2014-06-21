@@ -1,8 +1,70 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.homescreen.MainActivity"
-    tools:ignore="MergeRootFrame" />
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.tasklist.MainActivity$PlaceholderFragment" >
 
+    <EditText
+        android:id="@+id/addItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ems="10" 
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/addButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/addItem"
+        android:layout_alignParentRight="true"
+        android:text="@string/add" />
+
+    <ListView
+        android:id="@+id/toDoList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/completedHeader"
+        android:layout_below="@+id/addItem"
+        android:layout_centerHorizontal="true" >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/completedHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sortSwitch"
+        android:layout_alignLeft="@+id/toDoList"
+        android:layout_marginBottom="115dp"
+        android:text="@string/completed"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ListView
+        android:id="@+id/completedList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sortSwitch"
+        android:layout_alignLeft="@+id/completedHeader"
+        android:layout_alignTop="@+id/completedHeader"
+        android:layout_marginTop="15dp" >
+
+    </ListView>
+
+    <Switch
+        android:id="@+id/sortSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textOff="@string/date"
+        android:textOn="@string/priority" />
+
+</RelativeLayout>
