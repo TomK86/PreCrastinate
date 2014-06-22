@@ -3,6 +3,7 @@ package com.csci3308.precrastinate;
 
 
 import java.util.Calendar;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -17,9 +18,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.DatePicker;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.view.View.OnClickListener;
+import android.support.v4.app.Fragment;
 import com.csci3308.precrastinate.R;
+
 
 
 public class AddTask extends ActionBarActivity {
@@ -29,6 +31,7 @@ public class AddTask extends ActionBarActivity {
 	RatingBar priority;
 	EditText taskTitleName;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,16 +109,14 @@ public class AddTask extends ActionBarActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case android.R.id.home:
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 	/**
 	 * A placeholder fragment containing a simple view.

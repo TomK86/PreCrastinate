@@ -22,15 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
         	android:name="com.csci3308.precrastinate.AddTask"
-        	android:parentActivityName="com.csci3308.precrastinate.MainActivity" >
+        	android:parentActivityName="com.csci3308.precrastinate.MainActivity"
+        	android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <meta-data
             	android:name="android.support.PARENT_ACTIVITY"
             	android:value="com.csci3308.precrastinate.MainActivity" />
-    	</activity>
         
-
+    </activity>
     </application>
 
 </manifest>

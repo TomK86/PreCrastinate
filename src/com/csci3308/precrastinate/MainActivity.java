@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.support.v4.app.Fragment;
 import com.csci3308.precrastinate.R;
 
 public class MainActivity extends Activity {
@@ -217,7 +220,8 @@ public class MainActivity extends Activity {
 
 	
 	public void addTask(View view) {
-		Intent addtask = new Intent(this, AddTask.class);
+		Button TaskAdd = (Button) findViewById(R.id.button1);
+		Intent addtask = new Intent(getApplicationContext(), AddTask.class);
 		startActivity(addtask);
 		
 	}
