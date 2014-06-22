@@ -8,6 +8,7 @@
     <string name="completed">Completed:</string>
     <string name="sortByDate">Date</string>
     <string name="sortByPriority">Priority</string>
+    <string name="addtask">Adds</string>
 
 </resources>
 
