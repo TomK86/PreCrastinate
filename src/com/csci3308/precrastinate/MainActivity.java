@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+<<<<<<< HEAD
 import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,23 +14,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
+import android.content.Intent;;
+import android.widget.Button;
+import android.support.v4.app.Fragment;
 import com.csci3308.precrastinate.R;
 
 
 public class MainActivity extends ListActivity implements OnClickListener {
-	
+
 	List<Item> items;
-	List<String> listGroupHeaders, listTaskKeys;
+	static List<String> listGroupHeaders;
+	List<String> listTaskKeys;
     HashMap<String, Integer> listGroupSettings;
-    SharedPreferences saveGroup, saveTask;
-    SharedPreferences.Editor editGroup, editTask;
+	SharedPreferences saveGroup;
+	static SharedPreferences saveTask;
+	SharedPreferences.Editor editGroup;
+	static SharedPreferences.Editor editTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         // initialize saved task list data
+
         saveTask = getSharedPreferences("Saved Task Data", 0);
         editTask = saveTask.edit();
         
@@ -47,6 +55,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
         editGroup.commit();
  
         // prepare group list data
+
         //prepareGroupData(firstAppOpen);
         
         // prepare task list data
@@ -114,8 +123,8 @@ public class MainActivity extends ListActivity implements OnClickListener {
     }
     
     // Save task data to a SharedPreferences object
- 	public void saveTaskData(String name, long due, float priority, int group, boolean completed) {
-         int i = 0;
+ 	public static void saveTaskData(String name, long due, float priority, int group, boolean completed) {
+         Integer i = 0;
          String key = "task" + i;
          while(saveTask.contains(key)) {
      		i++;
@@ -130,12 +139,13 @@ public class MainActivity extends ListActivity implements OnClickListener {
     }
  	
  	// Delete task data from a SharedPreferences object
+    
     public void deleteTaskData(int position) {
      	String key = "task" + position;
      	if(saveTask.contains(key)) {
      		editTask.remove(key);
      		editTask.commit();
-     		int i = position + 1;
+     		Integer i = position + 1;
      		key = "task" + i;
      		while(saveTask.contains(key)) {
  				String name = saveTask.getString(key, "");
@@ -157,8 +167,8 @@ public class MainActivity extends ListActivity implements OnClickListener {
     }
     
     // Save group data to a SharedPreferences object
-    public void saveGroupData(String name, int color) {
-        int i = 0;
+    public void saveGroupData(SharedPreferences saveGroup, SharedPreferences.Editor editGroup, String name, Integer color) {
+        Integer i = 0;
         String key = "grp" + i;
         while(saveGroup.contains(key)) {
         		i++;
@@ -170,16 +180,16 @@ public class MainActivity extends ListActivity implements OnClickListener {
     }
     
     // Delete group data from a SharedPreferences object
-    public void deleteGroupData(int position) {
+    public void deleteGroupData(SharedPreferences saveGroup, SharedPreferences.Editor editGroup, Integer position) {
     	String key = "grp" + position;
     	if(saveGroup.contains(key)) {
     		editGroup.remove(key);
     		editGroup.commit();
-    		int i = position + 1;
+    		Integer i = position + 1;
     		key = "grp" + i;
     		while(saveGroup.contains(key)) {
 				String name = saveGroup.getString(key, "");
-				int color = saveGroup.getInt(key, 0);
+				Integer color = saveGroup.getInt(key, 0);
 				editGroup.putString("grp" + (i-1), name);
 				editGroup.putInt("grp" + (i-1), color);
 				editGroup.remove(key);
@@ -190,55 +200,63 @@ public class MainActivity extends ListActivity implements OnClickListener {
     	}
     }
     
-    // Dynamically create Task objects from saved SharedPreferences data
- 	private void prepareTaskData() {
- 		//int i = 0;
- 		//String key = "task" + i;
- 		//Map<String, Task> listTaskObjs = new HashMap<String, Task>();
- 		//while(saveTask.contains(key)) {
- 			//listTaskObjs.put(key, new Task(saveTask.getString(key, ""), saveTask.getLong(key, 0), 
- 					//saveTask.getFloat(key, 0), saveTask.getInt(key, 0), saveTask.getBoolean(key, false)));
- 			//i++;
- 			//key = "task" + i;
- 		//}
+
+ // Dynamically create Task objects from saved SharedPreferences data
+ 	private void prepareTaskData(SharedPreferences saveTask, SharedPreferences.Editor editTask) {
+ 		int i = 0;
+ 		String key = "task" + i;
+ 		Map<String, Task> listTaskObjs = new HashMap<String, Task>();
+ 		while(saveTask.contains(key)) {
+ 			listTaskObjs.put(key, new Task(saveTask.getString(key, ""), saveTask.getLong(key, 0), 
+ 					saveTask.getFloat(key, 0), saveTask.getInt(key, 0), saveTask.getBoolean(key, false)));
+ 			i++;
+ 			key = "task" + i;
+ 		}
+
  	}
     
     // Dynamically populate group list from saved SharedPreferences group data
-    private void prepareGroupData(boolean firstAppOpen) {
-    	listGroupHeaders = new ArrayList<String>();
-		listGroupSettings = new HashMap<String, Integer>();
-    	
-		if(firstAppOpen) {
+    private void prepareGroupData(SharedPreferences saveGroup, SharedPreferences.Editor editGroup, boolean firstAppOpen) {
+    	if(firstAppOpen) {
+	        listGroupHeaders = new ArrayList<String>();
+	        listGroupSettings = new HashMap<String, Integer>();
+	        
+	        
 	        // add default child data
 	        listGroupHeaders.add("To Do");
 	        listGroupHeaders.add("Work");
 	        listGroupHeaders.add("Home");
-	        listGroupHeaders.add(saveGroup.getString("newGrp", ""));
-	 
+	        ///listGroupHeaders.add(saveGroup.getString("newGrp", ""));
+	        
+	        
 	        listGroupSettings.put(listGroupHeaders.get(0), 0);
 	        listGroupSettings.put(listGroupHeaders.get(1), 4);
 	        listGroupSettings.put(listGroupHeaders.get(2), 1);
-	        listGroupSettings.put(listGroupHeaders.get(3), saveGroup.getInt("newGrp", 5));
+	        ///listGroupSettings.put(listGroupHeaders.get(3), saveGroup.getInt("newGrp", 5));
 	        
 	        // save default child data
-	        saveGroupData(listGroupHeaders.get(0), listGroupSettings.get(listGroupHeaders.get(0)));
-	        saveGroupData(listGroupHeaders.get(1), listGroupSettings.get(listGroupHeaders.get(1)));
-	        saveGroupData(listGroupHeaders.get(2), listGroupSettings.get(listGroupHeaders.get(2)));
+	        saveGroupData(saveGroup, editGroup, listGroupHeaders.get(0), listGroupSettings.get(listGroupHeaders.get(0)));
+	        saveGroupData(saveGroup, editGroup, listGroupHeaders.get(1), listGroupSettings.get(listGroupHeaders.get(1)));
+	        saveGroupData(saveGroup, editGroup, listGroupHeaders.get(2), listGroupSettings.get(listGroupHeaders.get(2)));
+	        
 	        
 	        // turn off first-open flag
 	        firstAppOpen = false;
 	        editGroup.putBoolean("firstAppOpen", false);
 	        editGroup.commit();
 	        return;
+	        
     	}
     	else {
-	        int i = 0;
+    		listGroupHeaders = new ArrayList<String>();
+    		listGroupSettings = new HashMap<String, Integer>();
+	        Integer i = 0;
 	        String key = "grp" + i;
 	        
 	        // add saved child data
 	        while(saveGroup.contains(key)) {
         		String name = saveGroup.getString(key, "");
-        		int color = saveGroup.getInt(key, 0);
+        		Integer color = saveGroup.getInt(key, 0);
         		listGroupHeaders.add(name);
         		listGroupSettings.put(name, color);
         		i++;
@@ -246,6 +264,35 @@ public class MainActivity extends ListActivity implements OnClickListener {
 	        }
 	        return;
     	}
-    }
-    
+
+    } 
+     
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	
+	public void addTask(View view) {
+		Intent addtask = new Intent(this, AddTask.class);
+		startActivity(addtask);
+		
+	}
+
 }
+
