@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
+import com.csci3308.precrastinate.R;
+
 
 public class MainActivity extends ListActivity implements OnClickListener {
 	
@@ -78,19 +80,19 @@ public class MainActivity extends ListActivity implements OnClickListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
+        //inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-        case R.id.action_add:
+        //case R.id.action_add:
         	//TODO addToList();
-        	return true;
-        case R.id.action_settings:
+        	//return true;
+        //case R.id.action_settings:
         	//TODO call preferences screen
-        	return true;
+        	//return true;
         default:
         	return super.onOptionsItemSelected(item);
         }

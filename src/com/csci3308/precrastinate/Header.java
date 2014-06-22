@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+
 import com.csci3308.precrastinate.TwoTextArrayAdapter.RowType;
 
 public class Header implements Item {
