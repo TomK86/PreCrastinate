@@ -220,8 +220,7 @@ public class MainActivity extends Activity {
 
 	
 	public void addTask(View view) {
-		Button TaskAdd = (Button) findViewById(R.id.button1);
-		Intent addtask = new Intent(getApplicationContext(), AddTask.class);
+		Intent addtask = new Intent(this, AddTask.class);
 		startActivity(addtask);
 		
 	}
