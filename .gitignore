@@ -1,5 +1,19 @@
 
+*.apk
+
 *.class
+
+.classpath
+
+.DS_Store
+
+.project
+
+.settings/org.eclipse.jdt.core.prefs
+
+bin/classes.dex
+
+bin/classes/com/csci3308/precrastinate/BuildConfig.class
 
 bin/classes/com/csci3308/precrastinate/MainActivity.class
 
@@ -15,30 +29,22 @@ bin/classes/com/csci3308/precrastinate/R$style.class
 
 bin/classes/com/csci3308/precrastinate/R.class
 
-bin/R.txt
-
 bin/jarlist.cache
-
-*.apk
-
-.DS_Store
-
-.classpath
-
-.project
-
-.settings/org.eclipse.jdt.core.prefs
-
-libs/android-support-v4.jar
-
-bin/resources.ap_
 
 bin/precrastinate.apk
 
-bin/classes.dex
+bin/R.txt
+
+bin/resources.ap_
+
+libs/android-support-v4.jar
+
+gen/android/support/v7/appcompat/R.java
+
+gen/com/csci3308/precrastinate/BuildConfig.java
 
 gen/com/csci3308/precrastinate/R.java
 
-gen/android/support/v7/appcompat/R.java
+proguard-project.txt
 
 project.properties
