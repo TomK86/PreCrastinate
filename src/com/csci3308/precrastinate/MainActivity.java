@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,34 +75,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
 		
 	}
     
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	// Inflate the menu; this adds items to the action bar if it is present.
-        //MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-    	// Handle action bar item clicks here. The action bar will
-    	// automatically handle clicks on the Home/Up button, so long
-    	// as you specify a parent activity in AndroidManifest.xml.
-        switch(item.getItemId()) {
-        //case R.id.action_add:
-        	//TODO addToList();
-        	//return true;
-        //case R.id.action_settings:
-        	//TODO call preferences screen
-        	//return true;
-        default:
-        	return super.onOptionsItemSelected(item);
-        }
-    }
-    
-    public void addToList() {
-    	//TODO call addtolist class constructor
-    }
     
     public void onCheckboxClicked(View view) {
     	boolean checked = ((CheckBox) view).isChecked();
@@ -259,10 +233,40 @@ public class MainActivity extends ListActivity implements OnClickListener {
     	}
     }
 
+ 	
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	// Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	// Handle action bar item clicks here. The action bar will
+    	// automatically handle clicks on the Home/Up button, so long
+    	// as you specify a parent activity in AndroidManifest.xml.
+        switch(item.getItemId()) {
+        	case R.id.action_addtask:
+        		addTask();
+        		return true;
+        	case R.id.action_addprefs:
+        		prefs();
+        		return true;
+        default:
+        	return super.onOptionsItemSelected(item);
+        }
+    }
 	
-	public void addTask(View view) {
+	public void addTask() {
 		Intent addtask = new Intent(this, AddTask.class);
 		startActivity(addtask);
+	}
+	
+	public void prefs() {
+		Intent addprefs = new Intent(this, Preferences.class);
+		startActivity(addprefs);
 	}
 
 }
