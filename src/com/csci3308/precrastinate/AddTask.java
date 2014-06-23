@@ -22,8 +22,6 @@ import android.widget.DatePicker;
 import android.app.DatePickerDialog;
 import android.view.View.OnClickListener;
 
-import com.csci3308.precrastinate.R;
-
 
 
 public class AddTask extends ActionBarActivity {

@@ -18,8 +18,6 @@ import android.widget.Toast;
 import android.widget.TimePicker;
 import android.widget.EditText;
 
-import com.csci3308.precrastinate.R;
-
 public class Preferences extends Activity {
  
 	ExpandableListAdapter listAdapter;

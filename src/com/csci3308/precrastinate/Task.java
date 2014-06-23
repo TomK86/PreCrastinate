@@ -1,6 +1,5 @@
 package com.csci3308.precrastinate;
 
-
 public class Task {
 	String title;
 	long due;

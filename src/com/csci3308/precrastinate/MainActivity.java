@@ -15,8 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.content.Intent;
 
-import com.csci3308.precrastinate.R;
-
 
 public class MainActivity extends ListActivity implements OnClickListener {
 

@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.csci3308.precrastinate.R;
 import com.csci3308.precrastinate.TwoTextArrayAdapter.RowType;
 
 public class ListItem implements Item {

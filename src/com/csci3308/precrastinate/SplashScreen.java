@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.csci3308.precrastinate.R;
-
 /**
  * 
  * @author lauramatuszewska
