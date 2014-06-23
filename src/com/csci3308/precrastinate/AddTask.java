@@ -19,7 +19,6 @@ import android.widget.Toast;
 import android.widget.DatePicker;
 import android.app.DatePickerDialog;
 import android.view.View.OnClickListener;
-import android.support.v4.app.Fragment;
 import com.csci3308.precrastinate.R;
 
 
@@ -73,7 +72,6 @@ public class AddTask extends ActionBarActivity {
 		ArrayAdapter<String> groupsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, MainActivity.listGroupHeaders);
 		groupsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         groupSpinner.setAdapter(groupsAdapter);
-        
         groupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { 
         	public void onItemSelected(AdapterView<?> adapterView, 
             View view, int i, long l) { 

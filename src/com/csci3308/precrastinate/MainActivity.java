@@ -3,8 +3,8 @@ package com.csci3308.precrastinate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-<<<<<<< HEAD
 import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
-import android.content.Intent;;
+import android.content.Intent;
 import android.widget.Button;
-import android.support.v4.app.Fragment;
+
 import com.csci3308.precrastinate.R;
 
 
@@ -86,26 +86,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
 		
 	}
     
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-        //case R.id.action_add:
-        	//TODO addToList();
-        	//return true;
-        //case R.id.action_settings:
-        	//TODO call preferences screen
-        	//return true;
-        default:
-        	return super.onOptionsItemSelected(item);
-        }
-    }
+  
     
     public void addToList() {
     	//TODO call addtolist class constructor
@@ -289,7 +270,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
 
 	
 	public void addTask(View view) {
-		Intent addtask = new Intent(this, AddTask.class);
+		Intent addtask = new Intent(MainActivity.this, AddTask.class);
 		startActivity(addtask);
 		
 	}
