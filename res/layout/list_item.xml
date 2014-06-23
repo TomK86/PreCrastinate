@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="100dip"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/grpNameDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:clickable="false"
+        android:background="#ebebeb"
+        android:text="Group Name:" />
+
+    <EditText
+        android:id="@+id/grpName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/grpNameDesc"
+        android:layout_toLeftOf="@+id/grpSaveBtn"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingBottom="5dp"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:paddingTop="5dp"
+        android:textSize="17sp" />
+    
+    <Button
+        android:id="@+id/grpSaveBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="33dip"
+        android:layout_above="@+id/grpColorDesc"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/grpNameDesc"
+        android:onClick="onGrpSaveBtnClicked"
+        android:text="Update" />
+
+    <TextView
+        android:id="@+id/grpColorDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/grpName"
+        android:clickable="false"
+        android:background="#ebebeb"
+        android:text="Group Color:" />
+
+    <RadioGroup
+        android:id="@+id/grpColor"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/grpColorDesc"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/color0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/green"
+            android:onClick="onRadioButtonClicked" />
+
+        <RadioButton
+            android:id="@+id/color1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/blue"
+            android:onClick="onRadioButtonClicked" />
+
+        <RadioButton
+            android:id="@+id/color2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/purple"
+            android:onClick="onRadioButtonClicked" />
+
+        <RadioButton
+            android:id="@+id/color3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/red"
+            android:onClick="onRadioButtonClicked" />
+
+        <RadioButton
+            android:id="@+id/color4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/orange"
+            android:onClick="onRadioButtonClicked" />
+    </RadioGroup>
+ 
+</RelativeLayout>
