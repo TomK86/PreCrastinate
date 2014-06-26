@@ -1,12 +1,10 @@
 package com.csci3308.precrastinate;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -42,18 +40,21 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.group_list_settings, null);
         }
+        
     	String name = (String) getChild(groupPosition, 0).getName();
     	int color = (Integer) getChild(groupPosition, 0).getColor();
+    	
         EditText grpName = (EditText) convertView.findViewById(R.id.grpName);
         RadioGroup grpColor = (RadioGroup) convertView.findViewById(R.id.grpColor);
-        Button grpUpdate = (Button) convertView.findViewById(R.id.grpUpdateBtn);
-        Button grpDelete = (Button) convertView.findViewById(R.id.grpDeleteBtn);
+        
         grpName.setText(name);
-    	grpColor.check(grpColor.getChildAt(color).getId());
+        if(color < 5)
+        	grpColor.check(grpColor.getChildAt(color).getId());
+        else
+        	grpColor.clearCheck();
+        
     	grpName.setTag(groupPosition);
-        grpColor.setTag(color);
-    	grpUpdate.setTag(groupPosition);
-    	grpDelete.setTag(groupPosition);
+    	grpColor.setTag(color);
         
         return convertView;
     }
@@ -76,19 +77,21 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent) {
-        String name = (String) getGroup(groupPosition).getName();
-        int color = (Integer) getGroup(groupPosition).getColor();
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.group_list_header, null);
         }
- 
+        
+        String name = (String) getGroup(groupPosition).getName();
+        int color = (Integer) getGroup(groupPosition).getColor();
+        
         TextView grpHeaders = (TextView) convertView.findViewById(R.id.grpHeaders);
         TextView colorBlock = (TextView) convertView.findViewById(R.id.colorBlock);
-        grpHeaders.setTypeface(null, Typeface.BOLD);
+        
         grpHeaders.setText(name);
         colorBlock.setBackgroundColor(MainActivity.colorList.get(color));
+        
         return convertView;
     }
  

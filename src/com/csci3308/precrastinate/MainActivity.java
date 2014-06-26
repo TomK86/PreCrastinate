@@ -46,6 +46,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
         colorList.put(2, 0xFF9933FF); // purple
         colorList.put(3, 0xFFFF0000); // red
         colorList.put(4, 0xFFFF9900); // orange
+        colorList.put(5, 0xFFFFFFFF); // white
 
         // initialize the saved data
         saveData = getSharedPreferences("Saved Data", 0);

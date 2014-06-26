@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.RadioButton;
@@ -65,16 +63,6 @@ public class Preferences extends Activity {
  
         // set the group list adapter
         grpListView.setAdapter(grpListAdapter);
-        
-        // this is called when a group in the list is clicked
-        grpListView.setOnGroupClickListener(new OnGroupClickListener() {
- 
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                    int groupPosition, long id) {
-                return false;
-            }
-        });
  
         // this is called when a group in the list is expanded
         grpListView.setOnGroupExpandListener(new OnGroupExpandListener() {
@@ -98,20 +86,10 @@ public class Preferences extends Activity {
             	boolean expCheck = false;
             	for(int i = 0; i < MainActivity.listGroupObjs.size(); i++)
             		expCheck = expCheck | grpListView.isGroupExpanded(i);
-            	if(!expCheck)
+            	if(!expCheck) {
             		prefSaveBtn.setVisibility(View.VISIBLE);
             		addGrpBtn.setVisibility(View.VISIBLE);
-            	MainActivity.loadGroupData();
-            }
-        });
- 
-        // this is called when one of the settings in an expanded group is clicked
-        grpListView.setOnChildClickListener(new OnChildClickListener() {
- 
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                    int groupPosition, int childPosition, long id) {
-                return false;
+            	}
             }
         });
     }
@@ -151,9 +129,6 @@ public class Preferences extends Activity {
     
     // this is called when the reminder time text field is clicked
     public void onReminderTimeClicked(View v) {
-		Toast.makeText(getApplicationContext(),
-    			"Please select the time of day you wish to receive reminders",
-    			Toast.LENGTH_LONG).show();
     	Calendar mCurrentTime = Calendar.getInstance();
     	int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
     	int minute = 0;
@@ -165,26 +140,21 @@ public class Preferences extends Activity {
     	mTimePicker = new TimePickerDialog(Preferences.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-            	if(selectedHour < 12) {
+            	if(selectedHour == 0) {
             		AmPm = 0;
-            		if(selectedHour == 0)
-            			selectedHour = 12;
-            		if(selectedMinute < 10)
-            			remTimeField.setText(selectedHour + ":0" + selectedMinute + " AM");
-            		else
-            			remTimeField.setText(selectedHour + ":" + selectedMinute + " AM");
+            		selectedHour = 12;
             	}
-            	else {
+            	else if(selectedHour > 12) {
             		AmPm = 1;
-            		if(selectedHour > 12) 
-            			selectedHour -= 12;
-            		if(selectedMinute < 10)
-            			remTimeField.setText(selectedHour + ":0" + selectedMinute + " PM");
-            		else
-            			remTimeField.setText(selectedHour + ":" + selectedMinute + " PM");
+            		selectedHour -= 12;
             	}
+            	else if(selectedHour < 12)
+            		AmPm = 0;
+            	else // selectedHour == 12
+            		AmPm = 1;
             	mHour = selectedHour;
             	mMinute = selectedMinute;
+            	updateRemTime();
             }
     	}, hour, minute, false);
         mTimePicker.setTitle("Select Reminder Time");
@@ -195,8 +165,9 @@ public class Preferences extends Activity {
 	public void onRadioButtonClicked(View view) {
 	    // Is the button now checked?
 	    boolean checked = ((RadioButton) view).isChecked();
-	    RadioGroup grpColor = (RadioGroup) view.getParent();
+	    
 	    // Check which radio button was clicked
+	    RadioGroup grpColor = (RadioGroup) view.getParent();
 	    switch(view.getId()) {
 	        case R.id.color0:
 	            if (checked)
@@ -223,13 +194,12 @@ public class Preferences extends Activity {
 	
 	// this is called when the group update button is clicked
 	public void onGrpUpdateBtnClicked(View view) {
-		int position = (Integer) view.getTag();
-		
-		EditText grpName = (EditText) view.getRootView().findViewById(R.id.grpName);
-		RadioGroup grpColor = (RadioGroup) view.getRootView().findViewById(R.id.grpColor);
-		
-    	String newName = grpName.getText().toString();
+		EditText grpName = (EditText) ((View) view.getParent()).findViewById(R.id.grpName);
+		RadioGroup grpColor = (RadioGroup) ((View) view.getParent()).findViewById(R.id.grpColor);
+
+    	int position = (Integer) grpName.getTag();
     	int newColor = (Integer) grpColor.getTag();
+    	String newName = grpName.getText().toString();
     	
     	MainActivity.listGroupObjs.get(position).setName(newName);
     	MainActivity.listGroupObjs.get(position).setColor(newColor); 
@@ -244,12 +214,17 @@ public class Preferences extends Activity {
 	
 	// this is called when the group delete button is clicked
 	public void onGrpDeleteBtnClicked(View view) {
-		int position = (Integer) view.getTag();
+		EditText grpName = (EditText) ((View) view.getParent()).findViewById(R.id.grpName);
+		
+		int position = (Integer) grpName.getTag();
 		String deletedGrp = MainActivity.listGroupObjs.get(position).getName();
+		
 		MainActivity.listGroupObjs.remove(position);
-		MainActivity.deleteGroupData(position);
+		//MainActivity.deleteGroupData(position);
+		
 		grpListView.collapseGroup(position);
 		grpListAdapter.notifyDataSetChanged();
+		
 		Toast.makeText(getApplicationContext(),
         		"'" + deletedGrp + "' group deleted",
                 Toast.LENGTH_SHORT).show();
@@ -257,19 +232,17 @@ public class Preferences extends Activity {
 	
 	// this is called when the add group button is clicked
 	public void onAddGrpBtnClicked(View view) {
-		int key = MainActivity.listGroupObjs.size();
-		MainActivity.listGroupObjs.add(key, new Group("New Group", 0));
+		MainActivity.listGroupObjs.add(new Group("New Group", 5));
 		grpListAdapter.notifyDataSetChanged();
-		Toast.makeText(getApplicationContext(),
-        		"New group added to list",
-                Toast.LENGTH_SHORT).show();
 	}
 	
 	// this is called when the save preferences button is clicked
 	public void onPrefSaveBtnClicked(View view) {
 		MainActivity.saveGroupData();
 		MainActivity.saveRemTime(mHour, mMinute, AmPm);
+		
 		Toast.makeText(this, "Preferences saved!", Toast.LENGTH_SHORT).show();
+		
 		finish();
 	}
     
