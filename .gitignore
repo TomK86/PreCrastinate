@@ -9,43 +9,15 @@
 
 .project
 
-.settings/org.eclipse.jdt.core.prefs
+.settings/*
 
-bin/classes.dex
+bin/*
 
-bin/classes/com/csci3308/precrastinate/BuildConfig.class
+doc/*
 
-bin/classes/com/csci3308/precrastinate/MainActivity.class
+libs/*
 
-bin/classes/com/csci3308/precrastinate/R$attr.class
-
-bin/classes/com/csci3308/precrastinate/R$drawable.class
-
-bin/classes/com/csci3308/precrastinate/R$layout.class
-
-bin/classes/com/csci3308/precrastinate/R$string.class
-
-bin/classes/com/csci3308/precrastinate/R$style.class
-
-bin/classes/com/csci3308/precrastinate/R.class
-
-bin/dexedLibs/android-support-v7-appcompat-ed71be8ddd814211920958be608bc7a0.jar
-
-bin/jarlist.cache
-
-bin/precrastinate.apk
-
-bin/R.txt
-
-bin/resources.ap_
-
-libs/android-support-v4.jar
-
-gen/android/support/v7/appcompat/R.java
-
-gen/com/csci3308/precrastinate/BuildConfig.java
-
-gen/com/csci3308/precrastinate/R.java
+gen/*
 
 proguard-project.txt
 
