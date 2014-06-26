@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,103 +8,95 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.csci3308.precrastinate.MainActivity$PlaceholderFragment" >
-
+	
     <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:id="@+id/addTaskNameHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/addTaskName"
+        android:background="#757678"
+        android:textColor="#ffffff"
         android:text="@string/new_task" />
-
+	
     <EditText
-        android:id="@+id/new_task"
+        android:id="@+id/addTaskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/blank"
+        android:layout_below="@+id/addTaskNameHeader"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/blank0"
         android:inputType="text" />
-    
+	
     <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:id="@+id/addTaskDateHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/blank"
-        android:textSize="18sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/due_date"
-        android:textSize="18sp" />
-
+        android:layout_alignLeft="@+id/addTaskDate"
+        android:layout_alignRight="@+id/addTaskDate"
+        android:layout_below="@+id/addTaskName"
+        android:background="#757678"
+        android:textColor="#ffffff"
+        android:text="@string/due_date" />
+	
     <EditText
-        android:id="@+id/due_date"
+        android:id="@+id/addTaskDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/addTaskDateHeader"
+        android:layout_marginBottom="10dp"
+        android:focusable="false"
         android:ems="10"
-        android:hint="@string/blank" 
-        android:inputType="date" />
-    
+        android:hint="@string/blank0"
+        android:inputType="none|date" />
+	
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/blank"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/textView1"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:id="@+id/addTaskGroupHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/group" 
-    	android:textSize="18sp" />
-
+        android:layout_below="@+id/addTaskDate"
+        android:background="#757678"
+        android:textColor="#ffffff"
+        android:text="@string/group" />
+	
     <Spinner
-        android:id="@+id/groups"
+        android:id="@+id/addTaskGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addTaskGroupHeader"
+        android:layout_marginBottom="10dp" />
+	
     <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:id="@+id/addTaskPriorityHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/blank"
-        android:textSize="18sp" />
-
-    <TextView
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/addTaskGroup"
+        android:background="#757678"
+        android:textColor="#ffffff"
+        android:text="@string/priority" />
+	
+    <RatingBar
+        android:id="@+id/addTaskPriority"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/priority"
-        android:textSize="18sp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <RatingBar
-            android:id="@+id/priority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-        
-    </RelativeLayout>
+        android:layout_below="@+id/addTaskPriorityHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
     
-    <TextView
+    <Button
+        android:id="@+id/addTaskSaveBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/blank"
-        android:textSize="18sp" />
-    
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onSaveTaskButtonClicked"
+        android:text="@string/button_save" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/button_save"
-            android:onClick="saveTaskButton" />
-        
-    </RelativeLayout>
-
-</LinearLayout> 
+</RelativeLayout> 

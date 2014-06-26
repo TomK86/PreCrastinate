@@ -1,21 +1,19 @@
 package com.csci3308.precrastinate;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
  
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+public class GroupListAdapter extends BaseExpandableListAdapter {
  
     private Context _context;
  
-    public ExpandableListAdapter(Context context) {
+    public GroupListAdapter(Context context) {
         this._context = context;
     }
  
@@ -40,40 +38,25 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_item, null);
+            convertView = infalInflater.inflate(R.layout.group_list_settings, null);
         }
+        
     	String name = (String) getChild(groupPosition, 0).getName();
     	int color = (Integer) getChild(groupPosition, 0).getColor();
+    	
         EditText grpName = (EditText) convertView.findViewById(R.id.grpName);
         RadioGroup grpColor = (RadioGroup) convertView.findViewById(R.id.grpColor);
-        Button grpSave = (Button) convertView.findViewById(R.id.grpSaveBtn);
+        
         grpName.setText(name);
-    	grpColor.check(grpColor.getChildAt(color).getId());
+        if(color < 5)
+        	grpColor.check(grpColor.getChildAt(color).getId());
+        else
+        	grpColor.clearCheck();
+        
     	grpName.setTag(groupPosition);
-        grpColor.setTag(groupPosition);
-    	grpSave.setTag(groupPosition);
+    	grpColor.setTag(color);
         
         return convertView;
-    }
-    
-    public String getChildName(int groupPosition, View convertView) {
-    	if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_item, null);
-        }
-    	EditText grpName = (EditText) convertView.findViewById(R.id.grpName);
-    	return grpName.getText().toString();
-    }
-    
-    public int getChildColor(int groupPosition, View convertView) {
-    	if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_item, null);
-        }
-    	RadioGroup grpColor = (RadioGroup) convertView.findViewById(R.id.grpColor);
-    	return grpColor.indexOfChild(grpColor.findViewById(grpColor.getCheckedRadioButtonId()));
     }
  
     @Override
@@ -94,33 +77,22 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent) {
-        String name = (String) getGroup(groupPosition).getName();
-        int color = (Integer) getGroup(groupPosition).getColor();
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_group, null);
+            convertView = infalInflater.inflate(R.layout.group_list_header, null);
         }
- 
+        
+        String name = (String) getGroup(groupPosition).getName();
+        int color = (Integer) getGroup(groupPosition).getColor();
+        
         TextView grpHeaders = (TextView) convertView.findViewById(R.id.grpHeaders);
         TextView colorBlock = (TextView) convertView.findViewById(R.id.colorBlock);
-        grpHeaders.setTypeface(null, Typeface.BOLD);
+        
         grpHeaders.setText(name);
         colorBlock.setBackgroundColor(MainActivity.colorList.get(color));
+        
         return convertView;
-    }
-    
-    public void setGroup(int groupPosition, String newName, int newColor, View convertView) {
-    	if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_group, null);
-        }
- 
-        TextView grpHeaders = (TextView) convertView.findViewById(R.id.grpHeaders);
-        TextView colorBlock = (TextView) convertView.findViewById(R.id.colorBlock);
-        grpHeaders.setText(newName);
-        colorBlock.setBackgroundColor(newColor);
     }
  
     @Override

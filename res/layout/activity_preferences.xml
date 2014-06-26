@@ -1,7 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#000000"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ffffff"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
@@ -12,8 +16,7 @@
         android:labelFor="@+id/remTimeEdit"
         android:gravity="center_horizontal"
         android:text="@string/remTimeLabel"
-        android:textColor="#ffffff"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
     
      <EditText
         android:id="@+id/remTimeEdit"
@@ -21,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/remTimeHeader"
         android:layout_centerHorizontal="true"
-        android:background="#ffffff"
+        android:focusable="false"
         android:ems="10"
         android:inputType="time"
         android:onClick="onReminderTimeClicked"
@@ -34,20 +37,17 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/remTimeEdit"
         android:paddingTop="5dp"
-        android:background="#000000"
         android:gravity="center_horizontal"
         android:labelFor="@+id/grpExpList"
         android:text="@string/groupLabel"
-        android:textColor="#ffffff"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
     
     <ExpandableListView
         android:id="@+id/groupExpList"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/prefSaveBtn"
-        android:layout_below="@+id/groupHeader"
-        android:background="#ffffff" />
+        android:layout_below="@+id/groupHeader" />
 
     <Button
         android:id="@+id/addGrpBtn"
@@ -55,8 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="16dp"
-        android:textColor="#ffffff"
+        android:visibility="visible"
         android:onClick="onAddGrpBtnClicked"
         android:text="@string/addGrp" />
     
@@ -66,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:textColor="#ffffff"
+        android:visibility="visible"
         android:onClick="onPrefSaveBtnClicked"
         android:text="@string/savePrefs" />
 

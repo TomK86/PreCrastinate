@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/color_field"
+        android:layout_width="26dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/task_field"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"
+        android:clickable="false"
+        android:longClickable="false" />
+
+    <TextView
+        android:id="@+id/task_field"
+        android:layout_width="250dp"
+        android:layout_height="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/checkbox"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="top"
+        android:singleLine="true"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/duedate_field"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/task_field"
+        android:layout_toLeftOf="@+id/priority_field"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="5dp"
+        android:singleLine="true"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/priority_field"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/task_field"
+        android:layout_toLeftOf="@+id/checkbox"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:singleLine="true"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:onClick="onCheckboxClicked"
+        android:padding="3dp" />
+
+</RelativeLayout>
