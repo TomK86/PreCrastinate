@@ -9,13 +9,31 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
- 
+
+/**
+ * The group list adapter, which acts as a link between the group data and the group
+ * list display.  It contains several methods which update the group ExpandableListView
+ * when changes are made to the list of Group objects.
+ * 
+ * @author Tom Kelly
+ *
+ * @version 1.0, 06/27/14
+ * 
+ * @category Preferences
+ */
 public class GroupListAdapter extends BaseExpandableListAdapter {
- 
-    private Context _context;
- 
+	
+    private LayoutInflater mInflater;
+    
+    /**
+     * Constructor for the GroupListAdapter class, which initializes the inflater used
+     * to focus on the various views when they are updated.
+     * 
+     * @param  context  The Preferences activity, where this adapter was initialized.
+     */
     public GroupListAdapter(Context context) {
-        this._context = context;
+    	this.mInflater = (LayoutInflater) context
+    			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
  
     @Override
@@ -36,11 +54,8 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,
             boolean isLastChild, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.group_list_settings, null);
-        }
+        if (convertView == null)
+            convertView = mInflater.inflate(R.layout.group_list_settings, null);
         
     	String name = (String) getChild(groupPosition, 0).getName();
     	int color = (Integer) getChild(groupPosition, 0).getColor();
@@ -78,11 +93,8 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.group_list_header, null);
-        }
+        if (convertView == null)
+            convertView = mInflater.inflate(R.layout.group_list_header, null);
         
         String name = (String) getGroup(groupPosition).getName();
         int color = (Integer) getGroup(groupPosition).getColor();

@@ -10,9 +10,12 @@ import android.view.Window;
 
 /**
  * 
- * @author lauramatuszewska
+ * 
+ * @author Laura Matuszewska
+ * 
+ * @version 1.0, 06/27/14
+ * 
  * @category SplashScreen
- *
  */
 public class SplashScreen extends Activity {
  

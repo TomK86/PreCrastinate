@@ -16,13 +16,23 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.content.Intent;
 
-public class MainActivity extends ListActivity implements OnClickListener {
+/**
+ * The task list activity, which contains several methods that sort, save, load,
+ * and delete the user's task, group, and reminder time data.
+ * 
+ * @author Matt Comerford
+ * @author Tom Kelly
+ * 
+ * @version  1.0, 06/27/14
+ * 
+ * @category TaskList
+ */
+public class MainActivity extends ListActivity {
 
 	static ArrayList<Group> listGroupObjs;
     static ArrayList<Task> listTaskObjs;
@@ -31,12 +41,11 @@ public class MainActivity extends ListActivity implements OnClickListener {
     static TaskListAdapter taskListAdapter;
     static boolean firstAppOpen, sortMode;
     public static int mHour, mMinute, AmPm;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getActionBar().setDisplayHomeAsUpEnabled(false);
 
         // initialize the saved data
         saveData = getSharedPreferences("Saved Data", 0);
@@ -45,29 +54,20 @@ public class MainActivity extends ListActivity implements OnClickListener {
         	editData.clear().putBoolean("firstAppOpen", true).apply();
         firstAppOpen = saveData.getBoolean("firstAppOpen", true);
         
-        sortMode = false; // current task sorting mode (false = date, true = priority)
+        // current task list sorting mode (false = date, true = priority)
+        sortMode = false;
         
-        loadGroupData(); // load the group list data
+        loadGroupData();
+        loadTaskData();
         
-        loadTaskData(); // load the task list data
+	    // initialize the task list adapter, if necessary
+	  	if(taskListAdapter == null) {
+	  		taskListAdapter = new TaskListAdapter(this);
+	  		setListAdapter(taskListAdapter);
+	  	}
+	  	
+	  	sortTasks();
     }
-    
-    @Override
-    public void onResume() {
-    	super.onResume();
-    	loadGroupData();
-    	loadTaskData();
-    }
-    
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-    	super.onRestoreInstanceState(savedInstanceState);
-    }
-    
-    @Override
-	public void onClick(View v) {
-		// this is what happens when you click a task in the list
-	}
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,6 +97,13 @@ public class MainActivity extends ListActivity implements OnClickListener {
         }
     }
     
+    /**
+     * Called when a CheckBox view in the task list is clicked, this toggles
+     * the completion status of the corresponding task, then sorts the list
+     * and commits the changes to the saved data.
+     * 
+     * @param  view  The CheckBox view that was clicked.
+     */
     public void onCheckboxClicked(View view) {
     	boolean checked = ((CheckBox) view).isChecked();
     	int position = (Integer) ((CheckBox) view).getTag();
@@ -108,12 +115,28 @@ public class MainActivity extends ListActivity implements OnClickListener {
     	sortTasks();
     }
     
+    /**
+     * Called when the sort mode Switch view below the task list is clicked, this
+     * toggles the sortMode boolean, then sorts the task list accordingly and commits
+     * the changes to the saved data.
+     * 
+     * @param  view  The Switch view that was clicked.
+     */
     public void onSortSwitchClicked(View view) {
     	sortMode = ((Switch) view).isChecked();
     	sortTasks();
     }
     
-    // sort task list first by date/priority, then by completion status -- updates list afterwards
+    /**
+     *  Sorts the task list (first by date or priority, depending on the currently
+     *  selected sort mode, then by completion status), updates the task list, and
+     *  commits the changes to the saved data.  This method should be called when
+     *  you want to save the task list data (instead of calling updateTaskList
+     *  or saveTaskData directly), as it is important to sort the list before
+     *  these operations occur.
+     *  
+     *  @author Tom Kelly
+     */
     public static void sortTasks() {
     	
     	ArrayList<Task> sortedTasks = new ArrayList<Task>();
@@ -122,7 +145,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
     	if(sortMode) { // sort by priority (highest to lowest)
     		Map<Float, List<Integer>> duplicates = new HashMap<Float, List<Integer>>();
     		for(int i = 0; i < max; i++) {
-    			Float key = listTaskObjs.get(i).getPriorityAsFloat();
+    			Float key = listTaskObjs.get(i).getPriority();
     			if(duplicates.containsKey(key))
     				duplicates.get(key).add(i);
     			else {
@@ -196,21 +219,26 @@ public class MainActivity extends ListActivity implements OnClickListener {
     	updateTaskList();
     }
     
-    // sets task list headers to the proper locations, then updates the list view
-    // (call sortTasks instead of calling this directly)
-    public static void updateTaskList() {
+    /**
+     * Calls saveTaskData to commit any changes from sortTasks to the saved data,
+     * sets the task list headers to their proper locations, then updates the list
+     * view.  You should call sortTasks instead of calling this directly.
+     */
+    private static void updateTaskList() {
     	saveTaskData();
     	if(taskListAdapter != null) {
-    		taskListAdapter.setCompletedHeaderRow();
+    		taskListAdapter.updateHeaderRows();
     		taskListAdapter.notifyDataSetChanged();
         }
     }
     
-    // commit all tasks from listTaskObjs to saved data
-    // (call sortTasks instead of calling this directly)
-    public static void saveTaskData() {
+    /**
+     * Commits all task data from the list of Task objects to the saved data.  You
+     * should call sortTasks instead of calling this directly.
+     */
+    private static void saveTaskData() {
     	String key;
-		String name;
+		String title;
 		long due;
 		float priority;
 		int group;
@@ -218,14 +246,14 @@ public class MainActivity extends ListActivity implements OnClickListener {
 		  
 		for(int i = 0; i < listTaskObjs.size(); i++) {
 			key = "task" + i;
-			name = listTaskObjs.get(i).getTaskTitle();
+			title = listTaskObjs.get(i).getTaskTitle();
 			due = listTaskObjs.get(i).getDueDateAsLong();
-			priority = listTaskObjs.get(i).getPriorityAsFloat();
+			priority = listTaskObjs.get(i).getPriority();
 			group = listTaskObjs.get(i).getGroupNum();
 			complete = listTaskObjs.get(i).getCompleted();
 			  
 			editData.putBoolean(key, true)
-			.putString(key + "nm", name)
+			.putString(key + "ttl", title)
 			.putLong(key + "due", due)
 			.putFloat(key + "pri", priority)
 			.putInt(key + "grp", group)
@@ -237,7 +265,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
 		  
 		if(saveData.contains(key)) {
 			editData.remove(key)
-			.remove(key + "nm")
+			.remove(key + "ttl")
 			.remove(key + "due")
 			.remove(key + "pri")
 			.remove(key + "grp")
@@ -246,7 +274,9 @@ public class MainActivity extends ListActivity implements OnClickListener {
 		}
     }
   	
-  	// commit all groups from listGroupObjs to saved data
+  	/**
+  	 * Commits all group data from the list of Group objects to the saved data.
+  	 */
   	public static void saveGroupData() {
   		  String key;
   		  String name;
@@ -273,7 +303,13 @@ public class MainActivity extends ListActivity implements OnClickListener {
   		  }
       }
   	  
-  	  // commit reminder time to saved data
+  	  /**
+  	   * Commits the user's preferred reminder time to saved data.
+  	   * 
+  	   * @param hour The hour value to be saved (between 0 and 12).
+  	   * @param minute The minute value to be saved (between 0 and 59).
+  	   * @param ampm The AM/PM value to be saved (0 = AM, 1 = PM).
+  	   */
   	  public static void saveRemTime(int hour, int minute, int ampm) {
   		  editData.putInt("hour", hour)
   		  .putInt("minute", minute)
@@ -281,30 +317,12 @@ public class MainActivity extends ListActivity implements OnClickListener {
   		  .apply();
   	  }
   	  
-  	  // delete all completed tasks from listTaskObjs, then commit the changes to saved data
-  	  public void deleteTaskData() {
-  		  new AlertDialog.Builder(this)
-  		  .setIcon(android.R.drawable.ic_dialog_alert)
-	      .setTitle("Delete Tasks")
-	      .setMessage("Are you sure you want to delete all completed tasks?")
-	      .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-	        
-	    	  @Override
-	    	  public void onClick(DialogInterface dialog, int which) {
-	    		  for(int i = listTaskObjs.size() - 1; i >= 0; i--) {
-	      			  if(listTaskObjs.get(i).getCompleted()) {
-	      				  listTaskObjs.remove(i);
-	      			  }
-	      		  }
-	      		  sortTasks();
-	      		  Toast.makeText(MainActivity.this, "Completed tasks deleted!", Toast.LENGTH_SHORT).show();
-	    	  }
-	      })
-	      .setNegativeButton("No", null)
-	      .show();
-  	  }
-  	  
-  	  // dynamically create Group objects from saved data
+  	  /**
+  	   * Dynamically populates the list of Group objects with information from
+  	   * the saved data.  If the application is being launched for the first time,
+  	   * this will instead populate the list of Group objects with default groups,
+  	   * then commit the changes to the saved data.
+  	   */
       public static void loadGroupData() {
     	  listGroupObjs = new ArrayList<Group>();
     	  if(firstAppOpen) {
@@ -321,7 +339,6 @@ public class MainActivity extends ListActivity implements OnClickListener {
 	        	String key = "grp" + i;
 	        	
 	        	// add saved child data
-	        	listGroupObjs.clear();
 	        	while(saveData.contains(key)) {
         			String name = saveData.getString(key + "nm", "");
         			int color = saveData.getInt(key + "clr", 0);
@@ -332,8 +349,16 @@ public class MainActivity extends ListActivity implements OnClickListener {
     	  }
       }
   	  
-      // dynamically create Task objects from saved data
-      public void loadTaskData() {
+      /**
+       * Dynamically populates the list of Task objects with information from
+       * the saved data, initializes the task list adapter if it does not
+       * yet exist, and sorts/updates the task list with the resulting task data.
+       * If the application is being launched for the first time, this will
+       * instead populate the list of Task objects with default tasks, turn off
+       * the 'firstAppOpen' flag, and sort/update the task list with the resulting
+       * task data.
+       */
+      public static void loadTaskData() {
     	  listTaskObjs = new ArrayList<Task>();
     	  if(firstAppOpen) {
     		  // test tasks -- these should be deleted before the app is finalized
@@ -356,7 +381,7 @@ public class MainActivity extends ListActivity implements OnClickListener {
     		  String key = "task" + i;
     		  while(saveData.contains(key)) {
     			  listTaskObjs.add(new Task(
-    					  saveData.getString(key + "nm", ""),
+    					  saveData.getString(key + "ttl", ""),
     					  saveData.getLong(key + "due", 0),
     					  saveData.getFloat(key + "pri", 0),
     					  saveData.getInt(key + "grp", 0),
@@ -366,28 +391,58 @@ public class MainActivity extends ListActivity implements OnClickListener {
     			  key = "task" + i;
     		  }
     	  }
-    	  // set task list adapter if necessary
-    	  if(taskListAdapter == null) {
-	    	  taskListAdapter = new TaskListAdapter(this);
-	          setListAdapter(taskListAdapter);
-    	  }
-    	  sortTasks();
       }
     
-      // load saved reminder time, if it exists
+      /**
+       * Loads the preferred reminder time from saved data, if it exists.  If it
+       * does not, default values of -1 are returned instead.
+       */
       public static void loadRemTime() {
   		mHour = saveData.getInt("hour", -1);
   		mMinute = saveData.getInt("minute", -1);
   		AmPm = saveData.getInt("ampm", -1);
       }
+      
+      /**
+       * Displays an alert dialog asking for user confirmation.  If the user selects 'Yes',
+  	   * all completed tasks are deleted from the list of Task objects, then the changes
+  	   * are committed to saved data.  If the user selects 'No', nothing happens.
+  	   */
+  	  public void deleteTaskData() {
+  		  new AlertDialog.Builder(this)
+  		  .setIcon(android.R.drawable.ic_dialog_alert)
+	      .setTitle("Delete Tasks")
+	      .setMessage("Are you sure you want to delete all completed tasks?")
+	      .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	        
+	    	  @Override
+	    	  public void onClick(DialogInterface dialog, int which) {
+	    		  for(int i = listTaskObjs.size() - 1; i >= 0; i--) {
+	      			  if(listTaskObjs.get(i).getCompleted()) {
+	      				  listTaskObjs.remove(i);
+	      			  }
+	      		  }
+	      		  sortTasks();
+	      		  Toast.makeText(MainActivity.this, "Completed tasks deleted!",
+	      				  Toast.LENGTH_SHORT).show();
+	    	  }
+	      })
+	      .setNegativeButton("No", null)
+	      .show();
+  	  }
 
-      // launches the AddTask activity
+      /**
+       * Launches the AddTask activity.
+       */
       public void addTask() {
+    	  loadGroupData();
     	  Intent addtask = new Intent(this, AddTask.class);
     	  startActivity(addtask);
       }
       
-      // launches the Preferences activity
+      /**
+       * Launches the Preferences activity.
+       */
       public void setPrefs() {
     	  loadGroupData();
     	  loadRemTime();

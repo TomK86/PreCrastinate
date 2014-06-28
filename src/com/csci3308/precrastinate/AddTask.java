@@ -20,7 +20,15 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 
-
+/**
+ * 
+ * 
+ * @author Matt Hong
+ * 
+ * @version 1.0, 06/27/14
+ * 
+ * @category AddTask
+ */
 public class AddTask extends Activity {
 	
 	EditText duedate;
@@ -86,6 +94,13 @@ public class AddTask extends Activity {
     	// automatically handle clicks on the Home/Up button, so long
     	// as you specify a parent activity in AndroidManifest.xml.
         switch(item.getItemId()) {
+	        case android.R.id.home:
+	            MainActivity.loadGroupData();
+	            MainActivity.saveGroupData();
+	            MainActivity.loadTaskData();
+	        	MainActivity.sortTasks();
+	        	finish();
+	            return true;
         	case R.id.action_preferences:
         		setPrefs();
         		return true;

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -16,6 +17,16 @@ import android.widget.Toast;
 import android.widget.TimePicker;
 import android.widget.EditText;
 
+/**
+ * The preferences screen activity, which contains several methods that set the user's
+ * preferred reminder time, as well as add, edit, and delete task groups.
+ * 
+ * @author Tom Kelly
+ * 
+ * @version  1.0, 06/27/14
+ * 
+ * @category Preferences
+ */
 public class Preferences extends Activity {
  
 	GroupListAdapter grpListAdapter;
@@ -35,7 +46,7 @@ public class Preferences extends Activity {
         // get the group list view
         grpListView = (ExpandableListView) findViewById(R.id.groupExpList);
         
-        // get the other child views
+        // get the child views
         remTimeField = (EditText) findViewById(R.id.remTimeEdit);
         prefSaveBtn = (Button) findViewById(R.id.prefSaveBtn);
         addGrpBtn = (Button) findViewById(R.id.addGrpBtn);
@@ -46,17 +57,18 @@ public class Preferences extends Activity {
         AmPm = MainActivity.AmPm;
     	updateRemTime();
         
-        // get the group list adapter
+        // initialize the group list adapter
         grpListAdapter = new GroupListAdapter(this);
- 
-        // set the group list adapter
         grpListView.setAdapter(grpListAdapter);
- 
-        // this is called when a group in the list is expanded
+        
         grpListView.setOnGroupExpandListener(new OnGroupExpandListener() {
         	int previousGroup = -1;
- 
-            @Override
+            /**
+             * Called when a group in the list is expanded, this hides the
+             * 'Add Group' and 'Save Preferences' Button views, and collapses
+             * any other group in the list that is currently expanded.
+             */
+        	@Override
             public void onGroupExpand(int groupPosition) {
             	prefSaveBtn.setVisibility(View.GONE);
             	addGrpBtn.setVisibility(View.GONE);
@@ -65,11 +77,14 @@ public class Preferences extends Activity {
                 previousGroup = groupPosition;
             }
         });
- 
-        // this is called when a group in the list is collapsed
+        
         grpListView.setOnGroupCollapseListener(new OnGroupCollapseListener() {
- 
-            @Override
+            /**
+             * Called when a group in the list is collapsed, this checks to see
+             * if all groups in the list are collapsed.  If they are, the 'Add
+             * Group' and 'Save Preferences' Button views will reappear.
+             */
+        	@Override
             public void onGroupCollapse(int groupPosition) {
             	boolean expCheck = false;
             	for(int i = 0; i < MainActivity.listGroupObjs.size(); i++)
@@ -82,24 +97,43 @@ public class Preferences extends Activity {
         });
     }
     
-    public int getHour() {
-    	return mHour;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+    	// automatically handle clicks on the Home/Up button, so long
+    	// as you specify a parent activity in AndroidManifest.xml.
+        switch(item.getItemId()) {
+	        case android.R.id.home:
+	            MainActivity.loadGroupData();
+	            MainActivity.saveGroupData();
+	            MainActivity.loadTaskData();
+	        	MainActivity.sortTasks();
+	        	finish();
+	            return true;
+        	default:
+        		return super.onOptionsItemSelected(item);
+        }
     }
     
-    public int getMinute() {
-    	return mMinute;
-    }
-    
-    public int getAmPm() {
-    	return AmPm;
-    }
-    
+    /**
+     * Sets the user's preferred reminder time upon launching the Preferences screen.
+     * The arguments should be obtained directly from the saved data, with default
+     * values of -1 if no such data exists.
+     * 
+     * @param  hour  The hour value to be set (between 1 and 12).
+     * @param  minute  The minute value to be set (between 0 and 59).
+     * @param  ampm  The AM/PM value to be set (0 = AM, 1 = PM).
+     */
     public static void setRemTime(int hour, int minute, int ampm) {
     	mHour = hour;
     	mMinute = minute;
     	AmPm = ampm;
     }
     
+    /**
+     * Updates the text in the reminder time EditText view to reflect the current preferred
+     * reminder time.
+     */
     public void updateRemTime() {
     	if(AmPm == 0) {
         	if(mMinute < 10)
@@ -115,8 +149,13 @@ public class Preferences extends Activity {
     	}
     }
     
-    // this is called when the reminder time text field is clicked
-    public void onReminderTimeClicked(View v) {
+    /**
+     * Called when the reminder time EditText view is clicked, this launches the
+     * TimePickerDialog that lets the user select their preferred reminder time.
+     * 
+     * @param  view  The reminder time EditText view that was clicked.
+     */
+    public void onReminderTimeClicked(View view) {
     	Calendar mCurrentTime = Calendar.getInstance();
     	int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
     	int minute = 0;
@@ -149,7 +188,13 @@ public class Preferences extends Activity {
         mTimePicker.show();
     }
     
-    // this is called when one of the group color radio buttons is clicked
+    /**
+     * Called when one of the group color RadioButton views is clicked, this
+     * sets a tag that is used to update the group's color when the user clicks
+     * the 'Update This Group' button.
+     * 
+     * @param  view  The group color RadioButton view that was clicked.
+     */
 	public void onRadioButtonClicked(View view) {
 	    // Is the button now checked?
 	    boolean checked = ((RadioButton) view).isChecked();
@@ -180,7 +225,16 @@ public class Preferences extends Activity {
 	    }
 	}
 	
-	// this is called when the group update button is clicked
+	/**
+	 * Called when the 'Update This Group' Button view is clicked, this updates the list
+	 * of Group objects to reflect any changes that were made and collapses the group.
+	 * Note that these changes are not permanent until the user clicks the 'Save
+	 * Preferences' button, as they are not committed to the saved data.  They will
+	 * therefore be reverted to the previous settings if the user clicks the 'back'
+	 * or 'home' button instead.
+	 * 
+	 * @param  view  The 'Update This Group' Button view that was clicked.
+	 */
 	public void onGrpUpdateBtnClicked(View view) {
 		EditText grpName = (EditText) ((View) view.getParent()).findViewById(R.id.grpName);
 		RadioGroup grpColor = (RadioGroup) ((View) view.getParent()).findViewById(R.id.grpColor);
@@ -197,7 +251,15 @@ public class Preferences extends Activity {
         		"'" + newName + "' group updated", Toast.LENGTH_SHORT).show();
 	}
 	
-	// this is called when the group delete button is clicked
+	/**
+	 * Called when the 'Delete This Group' Button view is clicked, this removes the group
+	 * from the list of Group objects and updates the group list view.  Note that this change
+	 * is not permanent until the user clicks the 'Save Preferences' button, as it is not
+	 * committed to the saved data.  It will therefore be reverted to the previous settings
+	 * if the user clicks the 'back' or 'home' button instead.
+	 * 
+	 * @param  view  The 'Delete This Group' Button view that was clicked.
+	 */
 	public void onGrpDeleteBtnClicked(View view) {
 		EditText grpName = (EditText) ((View) view.getParent()).findViewById(R.id.grpName);
 		int position = (Integer) grpName.getTag();
@@ -211,13 +273,28 @@ public class Preferences extends Activity {
         		"'" + deletedGrp + "' group deleted", Toast.LENGTH_SHORT).show();
 	}
 	
-	// this is called when the add group button is clicked
+	/**
+	 * Called when the 'Add Group' Button view is clicked, this adds a new Group object to the
+	 * list of Group objects (named 'New Group' with a null, or white, color value) and updates
+	 * the group list view.  Note that this change is not permanent until the user clicks
+	 * the 'Save Preferences' button, as it is not committed to the saved data.  It will
+	 * therefore be reverted to the previous settings if the user clicks the 'back' or 'home'
+	 * button instead.
+	 * 
+	 * @param  view  The 'Add Group' Button view that was clicked.
+	 */
 	public void onAddGrpBtnClicked(View view) {
 		MainActivity.listGroupObjs.add(new Group("New Group", 5));
 		grpListAdapter.notifyDataSetChanged();
 	}
 	
-	// this is called when the save preferences button is clicked
+	/**
+	 * Called when the 'Save Preferences' Button view is clicked, this commits the current
+	 * list of Group objects to saved data and returns the user to the screen they were on
+	 * when the Preferences screen was launched.
+	 * 
+	 * @param  view  The 'Save Preferences' Button view that was clicked.
+	 */
 	public void onPrefSaveBtnClicked(View view) {
 		MainActivity.saveGroupData();
 		MainActivity.saveRemTime(mHour, mMinute, AmPm);

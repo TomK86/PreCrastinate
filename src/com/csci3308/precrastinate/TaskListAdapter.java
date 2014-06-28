@@ -11,6 +11,17 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * The task list adapter, which acts as a link between the task data and the task list
+ * display.  It contains several methods which update the task ListView when changes are
+ * made to the list of Task objects.
+ * 
+ * @author Tom Kelly
+ *
+ * @version 1.0, 06/27/14
+ * 
+ * @category TaskList
+ */
 public class TaskListAdapter extends BaseAdapter {
 	
 	private static final int TYPE_TASK = 0;
@@ -21,12 +32,24 @@ public class TaskListAdapter extends BaseAdapter {
 	
 	private LayoutInflater mInflater;
 	
+	/**
+	 * Constructor for the TaskListAdapter class, which initializes the inflater used to
+	 * focus on the various views when they are updated, and also initializes the task
+	 * list's header rows to the correct positions in the list.
+	 * 
+	 * @param  context  The MainActivity activity, where this adapter was initialized.
+	 */
 	public TaskListAdapter(Context context) {
-		this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		setCompletedHeaderRow();
+		this.mInflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		updateHeaderRows();
 	}
 	
-	public void setCompletedHeaderRow() {
+	/**
+	 * Sets the appropriate row indices of the header rows to the headerRows array,
+	 * according to the number of active tasks in the list of Task objects.
+	 */
+	public void updateHeaderRows() {
 		boolean complete;
 		int activeCounter = 1;
 		for(int i = 0; i < MainActivity.listTaskObjs.size(); i++) {
@@ -140,7 +163,7 @@ public class TaskListAdapter extends BaseAdapter {
 	        	
 	        	// display the priority, and color it according to its value
 	        	float priority = MainActivity.listTaskObjs
-	    				.get(position).getPriorityAsFloat();
+	    				.get(position).getPriority();
 	        	if(priority < 2)
 	        		holder.priorityField.setTextColor(0xff33cc33);
 	        	else if(priority < 4)
@@ -165,6 +188,17 @@ public class TaskListAdapter extends BaseAdapter {
         return convertView;
 	}
 	
+	/**
+	 * A subclass of the task list adapter that stores the various views associated with
+	 * each row of the task list.  This allows the getView method of the task list
+	 * adapter to operate more efficiently by eliminating redundancy.
+	 * 
+	 * @author Tom Kelly
+	 * 
+	 * @version 1.0, 06/27/14
+	 * 
+	 * @category TaskList
+	 */
 	public static class ViewHolder {
 		public TextView headerField;
 		public TextView taskField;
