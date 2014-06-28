@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="90dip"
+    android:layout_height="100dip"
     android:orientation="vertical" >
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:clickable="false"
-        android:background="#757678"
+        android:background="#9E9FA0"
         android:textColor="#ffffff"
         android:text="@string/grpNameLabel" />
 
@@ -40,7 +40,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/grpName"
         android:clickable="false"
-        android:background="#757678"
+        android:background="#9E9FA0"
         android:textColor="#ffffff"
         android:text="@string/grpColorLabel" />
 
@@ -102,24 +102,26 @@
     
     <TextView
         style="?android:attr/listSeparatorTextViewStyle"
-        android:id="@+id/grpBottomMargin"
+        android:id="@+id/grpThirdMargin"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/grpColor"
-        android:background="#757678"
+        android:background="#9E9FA0"
         android:clickable="false" />
 
     <Button
         android:id="@+id/grpDeleteBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/grpBottomMargin"
-        android:background="#ff0000"
+        android:layout_below="@+id/grpThirdMargin"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/delete_button"
         android:onClick="onGrpDeleteBtnClicked"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -130,15 +132,29 @@
         android:id="@+id/grpUpdateBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/grpBottomMargin"
-        android:background="#00cc00"
+        android:layout_below="@+id/grpThirdMargin"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/update_button"
         android:onClick="onGrpUpdateBtnClicked"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="@string/grpUpdateLabel"
         android:textColor="#ffffff" />
+    
+    <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:id="@+id/grpFourthMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/grpDeleteBtn"
+        android:background="#9E9FA0"
+        android:clickable="false" />
  
 </RelativeLayout>

@@ -3,31 +3,39 @@
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal" >
-
-    <TextView
+    
+    <ImageView
         android:id="@+id/color_field"
-        android:layout_width="26dp"
-        android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
+        android:layout_width="30dp"
+        android:minWidth="30dp"
+        android:maxWidth="30dp"
+        android:layout_height="30dp"
+        android:minHeight="30dp"
+        android:maxHeight="30dp"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/task_field"
         android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_centerVertical="true"
         android:clickable="false"
-        android:longClickable="false" />
+        android:longClickable="false"
+        android:contentDescription="@string/blank1" />
 
     <TextView
         android:id="@+id/task_field"
-        android:layout_width="250dp"
-        android:layout_height="26dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="16sp"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/checkbox"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/color_field"
+        android:layout_above="@+id/priority_field"
         android:layout_marginBottom="10dp"
-        android:layout_gravity="top"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:includeFontPadding="false"
+        android:gravity="top"
         android:singleLine="true"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <TextView
@@ -37,7 +45,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/task_field"
         android:layout_toLeftOf="@+id/priority_field"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="5dp"
         android:singleLine="true"
@@ -51,7 +59,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/task_field"
         android:layout_toLeftOf="@+id/checkbox"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
         android:singleLine="true"
         android:textSize="12sp"

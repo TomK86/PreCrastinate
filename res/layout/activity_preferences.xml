@@ -10,13 +10,16 @@
     android:orientation="vertical" >
 
     <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
         android:id="@+id/remTimeHeader"
-        android:layout_width="match_parent"
-        android:layout_height="25sp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:labelFor="@+id/remTimeEdit"
-        android:gravity="center_horizontal"
+        android:paddingLeft="5dp"
+        android:background="#757678"
+        android:textColor="#ffffff"
         android:text="@string/remTimeLabel"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
     
      <EditText
         android:id="@+id/remTimeEdit"
@@ -24,23 +27,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/remTimeHeader"
         android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
         android:focusable="false"
-        android:ems="10"
+        android:ems="8"
         android:inputType="time"
         android:onClick="onReminderTimeClicked"
         android:padding="3dp" />
 
     <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
         android:id="@+id/groupHeader"
         android:layout_width="match_parent"
-        android:layout_height="25sp"
-        android:layout_alignParentLeft="true"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/remTimeEdit"
-        android:paddingTop="5dp"
-        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
         android:labelFor="@+id/grpExpList"
+        android:paddingLeft="5dp"
+        android:background="#757678"
+        android:textColor="#ffffff"
         android:text="@string/groupLabel"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
     
     <ExpandableListView
         android:id="@+id/groupExpList"

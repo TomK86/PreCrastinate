@@ -104,8 +104,8 @@ public class AddTask extends Activity {
 		int chosenGroup = groupSpinner.getSelectedItemPosition();
 		float chosenRating = priority.getRating();
 		
-		Task newTask = new Task(chosenTitle, chosenDate, chosenRating, chosenGroup, false); 
-		MainActivity.saveTaskData(newTask);
+		MainActivity.listTaskObjs.add(new Task(chosenTitle, chosenDate,
+				chosenRating, chosenGroup, false));
 		MainActivity.sortTasks();
 		
 		Toast.makeText(this, "Task saved!", Toast.LENGTH_SHORT).show();
@@ -115,6 +115,8 @@ public class AddTask extends Activity {
 	
 	// launches the Preferences activity
 	public void setPrefs() {
+		MainActivity.loadGroupData();
+		MainActivity.loadRemTime();
 		Intent prefs = new Intent(this, Preferences.class);
 		startActivity(prefs);
 	}

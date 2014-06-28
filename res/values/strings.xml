@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">PreCrastinate</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_delete_tasks">Delete Completed Tasks</string>
     <string name="action_add_task">Add Task</string>
     <string name="action_preferences">Preferences</string>
     <string name="addTsk">Add Task</string>
@@ -25,7 +25,7 @@
     <string name="title_activity_add_task">AddTask</string>
     <string name="description">Description</string>
     <string name="remTimeLabel">When would you like to be reminded?</string>
-    <string name="groupLabel">How would you like to group your tasks?</string>
+    <string name="groupLabel">My Groups</string>
     <string name="addGrp">Add a Group</string>
     <string name="savePrefs">Save Preferences</string>
     <string name="grpNameLabel">Group Name</string>

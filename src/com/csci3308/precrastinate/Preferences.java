@@ -41,22 +41,10 @@ public class Preferences extends Activity {
         addGrpBtn = (Button) findViewById(R.id.addGrpBtn);
         
         // set the current saved reminder time, if it exists
-        MainActivity.loadRemTime();
         mHour = MainActivity.mHour;
         mMinute = MainActivity.mMinute;
         AmPm = MainActivity.AmPm;
-    	if(AmPm == 0) {
-        	if(mMinute < 10)
-    			remTimeField.setText(mHour + ":0" + mMinute + " AM");
-    		else
-    			remTimeField.setText(mHour + ":" + mMinute + " AM");
-    	}
-    	else if(AmPm == 1) {
-    		if(mMinute < 10)
-    			remTimeField.setText(mHour + ":0" + mMinute + " PM");
-    		else
-    			remTimeField.setText(mHour + ":" + mMinute + " PM");
-    	}
+    	updateRemTime();
         
         // get the group list adapter
         grpListAdapter = new GroupListAdapter(this);
@@ -196,38 +184,31 @@ public class Preferences extends Activity {
 	public void onGrpUpdateBtnClicked(View view) {
 		EditText grpName = (EditText) ((View) view.getParent()).findViewById(R.id.grpName);
 		RadioGroup grpColor = (RadioGroup) ((View) view.getParent()).findViewById(R.id.grpColor);
-
     	int position = (Integer) grpName.getTag();
     	int newColor = (Integer) grpColor.getTag();
     	String newName = grpName.getText().toString();
     	
     	MainActivity.listGroupObjs.get(position).setName(newName);
-    	MainActivity.listGroupObjs.get(position).setColor(newColor); 
-    	
+    	MainActivity.listGroupObjs.get(position).setColor(newColor);
     	grpListAdapter.notifyDataSetChanged();
     	grpListView.collapseGroup(position);
     	
     	Toast.makeText(getApplicationContext(),
-        		"'" + MainActivity.listGroupObjs.get(position).getName()
-        		+ "' group updated", Toast.LENGTH_SHORT).show();
+        		"'" + newName + "' group updated", Toast.LENGTH_SHORT).show();
 	}
 	
 	// this is called when the group delete button is clicked
 	public void onGrpDeleteBtnClicked(View view) {
 		EditText grpName = (EditText) ((View) view.getParent()).findViewById(R.id.grpName);
-		
 		int position = (Integer) grpName.getTag();
 		String deletedGrp = MainActivity.listGroupObjs.get(position).getName();
 		
 		MainActivity.listGroupObjs.remove(position);
-		MainActivity.deleteGroupData(position);
-		
-		grpListView.collapseGroup(position);
 		grpListAdapter.notifyDataSetChanged();
+		grpListView.collapseGroup(position);
 		
 		Toast.makeText(getApplicationContext(),
-        		"'" + deletedGrp + "' group deleted",
-                Toast.LENGTH_SHORT).show();
+        		"'" + deletedGrp + "' group deleted", Toast.LENGTH_SHORT).show();
 	}
 	
 	// this is called when the add group button is clicked

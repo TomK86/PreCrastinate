@@ -10,7 +10,8 @@
     <application
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:allowBackup="true">
         <activity android:name="com.csci3308.precrastinate.SplashScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +20,9 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.csci3308.precrastinate.MainActivity" >
+        <activity 
+            android:name="com.csci3308.precrastinate.MainActivity"
+            android:screenOrientation="portrait" >
         </activity>
 
         <activity

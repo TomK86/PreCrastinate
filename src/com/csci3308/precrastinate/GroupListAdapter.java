@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
  
@@ -87,10 +88,21 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
         int color = (Integer) getGroup(groupPosition).getColor();
         
         TextView grpHeaders = (TextView) convertView.findViewById(R.id.grpHeaders);
-        TextView colorBlock = (TextView) convertView.findViewById(R.id.colorBlock);
+        ImageView colorBlock = (ImageView) convertView.findViewById(R.id.colorBlock);
         
         grpHeaders.setText(name);
-        colorBlock.setBackgroundColor(MainActivity.colorList.get(color));
+        if(color == 0)
+        	colorBlock.setImageResource(R.drawable.green_box);
+    	if(color == 1)
+    		colorBlock.setImageResource(R.drawable.blue_box);
+    	if(color == 2)
+    		colorBlock.setImageResource(R.drawable.purple_box);
+    	if(color == 3)
+    		colorBlock.setImageResource(R.drawable.red_box);
+    	if(color == 4)
+    		colorBlock.setImageResource(R.drawable.orange_box);
+    	if(color == 5)
+    		colorBlock.setImageResource(R.drawable.white_box);
         
         return convertView;
     }
