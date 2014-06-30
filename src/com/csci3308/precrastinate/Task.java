@@ -9,7 +9,6 @@ package com.csci3308.precrastinate;
  * 
  * @version 1.0, 06/27/14
  * 
- * @category TaskList
  */
 public class Task {
 	private String title;

@@ -29,8 +29,6 @@ import android.content.Intent;
  * @author Tom Kelly
  * 
  * @version  1.0, 06/27/14
- * 
- * @category TaskList
  */
 public class MainActivity extends ListActivity {
 

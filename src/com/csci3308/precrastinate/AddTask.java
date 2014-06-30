@@ -27,7 +27,6 @@ import android.view.View.OnClickListener;
  * 
  * @version 1.0, 06/27/14
  * 
- * @category AddTask
  */
 public class AddTask extends Activity {
 	

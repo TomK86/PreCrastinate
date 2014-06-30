@@ -8,8 +8,6 @@ package com.csci3308.precrastinate;
  * 
  * @version 1.0, 06/27/14
  * 
- * @category TaskList
- * @category Preferences
  */
 public class Group {
 	

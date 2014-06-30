@@ -20,7 +20,6 @@ import android.widget.TextView;
  *
  * @version 1.0, 06/27/14
  * 
- * @category TaskList
  */
 public class TaskListAdapter extends BaseAdapter {
 	

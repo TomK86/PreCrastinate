@@ -25,7 +25,6 @@ import android.widget.EditText;
  * 
  * @version  1.0, 06/27/14
  * 
- * @category Preferences
  */
 public class Preferences extends Activity {
  
