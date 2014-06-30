@@ -9,11 +9,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.DatePicker;
@@ -22,16 +20,21 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 
-
+/** Add new task activity screen.  It contains the ability to add task title, due date, group
+ * and priority.
+ * 
+ * @author Matt Hong
+ * 
+ * @version 1.0, 06/27/14
+ *
+ */
 public class AddTask extends Activity {
 	
-	EditText duedate;
+	EditText dueDate;
 	Spinner groupSpinner;
-	RatingBar priority;
-	EditText taskTitleName;
 	List<String> listGroupNames;
 
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,25 +46,25 @@ public class AddTask extends Activity {
 			listGroupNames.add(MainActivity.listGroupObjs.get(i).getName());
 		
 		// Assign Due Date
-	    duedate = (EditText) findViewById(R.id.addTaskDate);
+	    dueDate = (EditText) findViewById(R.id.addTaskDate);
 		
 		 // EditText click listener
-        duedate.setOnClickListener(new OnClickListener() {
+        dueDate.setOnClickListener(new OnClickListener() {
        	
        	@Override
             public void onClick(View v) {
-       		Toast.makeText(getApplicationContext(),
+       			Toast.makeText(getApplicationContext(),
            		"Please select the deadline or due date for this task",
            		Toast.LENGTH_LONG).show();
-           	Calendar mCurrentDate = Calendar.getInstance();
-           	int day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
-           	int month = mCurrentDate.get(Calendar.MONTH);
-           	int year = mCurrentDate.get(Calendar.YEAR);
-           	DatePickerDialog mDatePicker;
-           	mDatePicker = new DatePickerDialog(AddTask.this, new DatePickerDialog.OnDateSetListener() {
+       			Calendar mCurrentDate = Calendar.getInstance();
+       			int day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
+       			int month = mCurrentDate.get(Calendar.MONTH);
+       			int year = mCurrentDate.get(Calendar.YEAR);
+       			DatePickerDialog mDatePicker;
+       			mDatePicker = new DatePickerDialog(AddTask.this, new DatePickerDialog.OnDateSetListener() {
            		@Override
                 public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
-                duedate.setText((selectedMonth + 1) + " / " + selectedDay + " / " + selectedYear);
+                dueDate.setText((selectedMonth + 1) + " / " + selectedDay + " / " + selectedYear);
                 
                 }
            	}, year, month, day);
@@ -75,30 +78,15 @@ public class AddTask extends Activity {
 
 		// Create Spinner
 		groupSpinner = (Spinner) findViewById(R.id.addTaskGroup);
-		ArrayAdapter<String> groupsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listGroupNames);
+		ArrayAdapter<String> groupsAdapter = new ArrayAdapter<String>(this, android.R.layout
+				.simple_spinner_item, listGroupNames);
 		groupsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         groupSpinner.setAdapter(groupsAdapter);
         
-        groupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { 
-        	public void onItemSelected(AdapterView<?> adapterView, 
-            View view, int i, long l) { 
-            }
-            // If no option selected
-        	public void onNothingSelected(AdapterView<?> arg0) {}
-        });
-        
-		// Assign Priority
-		priority = (RatingBar) findViewById(R.id.addTaskPriority);
-		priority.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
 
-			@Override
-			public void onRatingChanged(RatingBar ratingBar, float rating,
-					boolean fromUser) {
-			}
-		});
-		
-	
+
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,6 +95,7 @@ public class AddTask extends Activity {
         inflater.inflate(R.menu.add_task, menu);
         return super.onCreateOptionsMenu(menu);
 	}
+
 
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -122,25 +111,33 @@ public class AddTask extends Activity {
         }
     }
 
-	/** Called when the user clicks the Save button */
+
 	
+	/**
+	 * Saves data when Save button is clicked
+	 * @param view
+	 */
 	public void onSaveTaskButtonClicked(View view) {
-		taskTitleName = (EditText) findViewById(R.id.addTaskName);
-		String chosenDate = duedate.getText().toString();
-		String taskTitle = taskTitleName.getText().toString();
+		EditText taskTitleName = (EditText) findViewById(R.id.addTaskName);
+		RatingBar priority = (RatingBar) findViewById(R.id.addTaskPriority);
+		
+		String chosenTitle = taskTitleName.getText().toString();
+		String chosenDate = dueDate.getText().toString();
 		int chosenGroup = groupSpinner.getSelectedItemPosition();
 		float chosenRating = priority.getRating();
 		
-		Task newTask = new Task(taskTitle, chosenDate, chosenRating, chosenGroup, false); 
+		Task newTask = new Task(chosenTitle, chosenDate, chosenRating, chosenGroup, false); 
 		MainActivity.saveTaskData(newTask);
 		MainActivity.sortTasks();
 		
 		Toast.makeText(this, "Task saved!", Toast.LENGTH_SHORT).show();
-		
 		finish();
 	}
 	
 	// launches the Preferences activity
+	/**
+	 * Pulls up the Preferences screen
+	 */
 	public void setPrefs() {
 		Intent prefs = new Intent(this, Preferences.class);
 		startActivity(prefs);
