@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 /**
- * 
+ * Loading Screen with a progress bar to indicate to user that the app is loading.
  * 
  * @author Laura Matuszewska
  * 
@@ -19,9 +19,12 @@ import android.view.Window;
  */
 public class SplashScreen extends Activity {
  
-    // Set Duration of the Splash Screen
-    long Delay = 4000;
+    long Delay = 3000;
  
+    /**
+     * Loading is on a timer with a no feature screen which starts MainActivity when it completes.
+     * 
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +51,6 @@ public class SplashScreen extends Activity {
             }
         };
  
-        // Start the timer
         RunSplash.schedule(ShowSplash, Delay);
     }
 }
