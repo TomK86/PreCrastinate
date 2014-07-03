@@ -1,5 +1,11 @@
-Testing PreCrastinate
-=====================
+Testing
+=======
+Final Project for CSCI 3308 (Software Development Methods & Tools) - Summer 2014
+
+Created by: Matt Comerford, Matt Hong, Tom Kelly, & Laura Matuszewska
+
+Running Unit Tests on PreCrastinate
+===================================
 
 Precrastinate is tested using JUnit - a simple framework for writing repeatable unit tests. In order to test this code, the user must have previously installed Eclipse and the Eclipse Android Emulator. Testing may be done within Eclipse by following these steps:
 - Expand the desired project in the Package Explorer.
