@@ -15,6 +15,14 @@ public class Group {
 	private int color;
 	
 	/**
+	 * Blank group class constructor.
+	 */
+	public Group() {
+		this.name = "";
+		this.color = 5;
+	}
+	
+	/**
 	 * Group class constructor.
 	 * 
 	 * @param  groupName  The name of the group.
