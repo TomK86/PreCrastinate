@@ -21,6 +21,20 @@ public class Task {
 	private boolean complete;
 	
 	/**
+	 * Task class constructor that takes no arguments and creates a blank task.
+	 */
+	public Task() {
+		this.title = "";
+		this.date = 0;
+		this.month = "";
+		this.day = "";
+		this.year = "";
+		this.priority = 0;
+		this.group = 0;
+		this.complete = false;
+	}
+	
+	/**
 	 * Task class constructor that takes a long-integer due date argument.  If
 	 * this argument = 0, the task is considered to have no due date.
 	 * 
